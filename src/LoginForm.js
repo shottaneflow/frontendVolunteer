@@ -10,12 +10,12 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8081/auth-api", { username, password });
+            const response = await axios.post("http://localhost:8081/auth-api", { username, password }/*,{withCredentials: true}*/);
 
             if (response.status === 200) {
-                // Успешная авторизация
+                const token = response.data;
+                localStorage.setItem("jwtToken", token);
                 console.log("Авторизация успешна!", response.data);
-                // Редирект на главную страницу
                 window.location.href = "/events";
             } else {
                 // Ошибка авторизации
