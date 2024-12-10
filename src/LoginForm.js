@@ -10,19 +10,26 @@ const LoginForm = () => {
         e.preventDefault();
 
         try {
-            const response = await axios.post("http://localhost:8081/auth-api", { username, password }/*,{withCredentials: true}*/);
+            // Отправка запроса на авторизацию
+            const response = await axios.post("http://localhost:8081/auth-api", { username, password });
 
             if (response.status === 200) {
-                const token = response.data;
+                const { token, roles } = response.data;  // Извлекаем токен и роли из ответа
+
+                // Сохраняем токен и роли в localStorage
                 localStorage.setItem("jwtToken", token);
+                localStorage.setItem("userRoles", JSON.stringify(roles));  // Роли сохраняем как строку JSON
+
                 console.log("Авторизация успешна!", response.data);
+                console.log("Роли пользователя:", roles);
+
+                // Перенаправление на страницу событий
                 window.location.href = "/events";
             } else {
-                // Ошибка авторизации
                 setErrorMessage(response.data.message || "Ошибка авторизации");
             }
         } catch (error) {
-            console.error("Ошибка при авторизации:", error);  // Вывод ошибки в консоль для диагностики
+            console.error("Ошибка при авторизации:", error);
 
             if (error.response) {
                 if (error.response.status === 409) {
@@ -33,7 +40,6 @@ const LoginForm = () => {
                     setErrorMessage("Произошла ошибка, попробуйте позже.");
                 }
             } else {
-                // Если ошибка сети или другие проблемы
                 setErrorMessage("Произошла ошибка, попробуйте позже.");
             }
         }
