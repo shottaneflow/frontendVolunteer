@@ -44,6 +44,10 @@ const EventsPage = () => {
         navigate("/add-event");
     };
 
+    const handleOpenActivities = (eventId) => {
+        navigate(`/events/${eventId}/activities`);
+    };
+
     const handleDeleteEvent = async (id) => {
         try {
             await apiClient.delete(`http://localhost:8081/admin/events-api/events/${id}`);
@@ -79,6 +83,7 @@ const EventsPage = () => {
                         <p>Тип: {event.type}</p>
                         <p>Требуемые волонтеры: {event.requiredVolunteers}</p>
                         <p>Статус: {event.status}</p>
+                        <button onClick={() => handleOpenActivities(event.id)}>Просмотреть мероприятия</button>
                         {isAdmin && (
                             <button onClick={() => handleDeleteEvent(event.id)}>Удалить</button>
                         )}

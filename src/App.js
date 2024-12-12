@@ -4,6 +4,8 @@ import Registration from './Registration'; // ваш компонент реги
 import LoginForm from './LoginForm';
 import AddEventPage from "./AddEventPage";
 import EventsPage from "./EventsPage";
+import ActivitiesPage from "./ActivitiesPage";
+import AddActivityPage from "./AddActivityPage";
 
 function App() {
 
@@ -16,6 +18,8 @@ function App() {
             <Route path="/login" element={<LoginForm />} />
             {<Route path="/add-event" element={<AddEventPage />} />}
             <Route path="/events" element={<EventsPage />} />
+            <Route path="/events/:id/activities" element={<ActivitiesPage />} />
+            <Route path="/events/:id/activities/create" element={<AddActivityPage />} />
         </Routes>
       </Router>
   );
