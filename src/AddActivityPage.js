@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import apiClient from "./apiClient";
 import { useParams, useNavigate } from "react-router-dom";
 
@@ -10,15 +10,54 @@ const AddActivityPage = () => {
         startDate: "",
         requiredVolunteers: 0,
         registeredVolunteers: 0,
+        languages: [], // выбранные языки
+        locations: [] // указанные локации
     });
+    const [languages, setLanguages] = useState([]);
+    const [newLocation, setNewLocation] = useState("");
+
+    useEffect(() => {
+        const fetchLanguages = async () => {
+            try {
+                const response = await apiClient.get("http://localhost:8081/language-api/all-languages");
+                setLanguages(response.data);
+            } catch (error) {
+                console.error("Ошибка загрузки языков:", error);
+            }
+        };
+        fetchLanguages();
+    }, []);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+
+    const handleLanguageToggle = (language) => {
+        setFormData((prev) => {
+            const exists = prev.languages.some((lang) => lang.id === language.id);
+            return {
+                ...prev,
+                languages: exists
+                    ? prev.languages.filter((lang) => lang.id !== language.id)
+                    : [...prev.languages, language]
+            };
+        });
+    };
+
+    const handleAddLocation = () => {
+        if (newLocation.trim()) {
+            setFormData((prev) => ({
+                ...prev,
+                locations: [...prev.locations, { id: null, name: newLocation.trim() }]
+            }));
+            setNewLocation("");
+        }
+    };
+
     const getMinDateTime = () => {
         const now = new Date();
-        return now.toISOString().slice(0, 16); // Формат для <input type="datetime-local">
+        return now.toISOString().slice(0, 16);
     };
 
     const handleSubmit = async (e) => {
@@ -28,10 +67,7 @@ const AddActivityPage = () => {
                 `http://localhost:8081/admin/events-api/${eventId}/create-activity`,
                 formData
             );
-
             alert("Мероприятие успешно создано!");
-
-            // Перенаправляем назад к списку мероприятий
             navigate(`/events/${eventId}/activities`);
         } catch (error) {
             console.error("Ошибка при создании мероприятия:", error);
@@ -56,7 +92,7 @@ const AddActivityPage = () => {
                 <div>
                     <label>Дата начала:</label>
                     <input
-                        type="date"
+                        type="datetime-local"
                         name="startDate"
                         value={formData.startDate}
                         onChange={handleChange}
@@ -75,18 +111,33 @@ const AddActivityPage = () => {
                         required
                     />
                 </div>
-                <div>
-                    <label>Зарегистрированные волонтеры:</label>
-                    <input
-                        type="number"
-                        name="registeredVolunteers"
-                        value={formData.registeredVolunteers}
-                        onChange={handleChange}
-                        min="0"
-                        required
-                    />
-                </div>
-                <button type="submit">Создать</button>
+                <h3>Языки</h3>
+                {languages.map((language) => (
+                    <label key={language.id}>
+                        <input
+                            type="checkbox"
+                            checked={formData.languages.some((lang) => lang.id === language.id)}
+                            onChange={() => handleLanguageToggle(language)}
+                        />
+                        {language.name}
+                    </label>
+                ))}
+                <h3>Локации</h3>
+                {formData.locations.map((location, index) => (
+                    <div key={index}>{location.name}</div>
+                ))}
+                <input
+                    type="text"
+                    value={newLocation}
+                    onChange={(e) => setNewLocation(e.target.value)}
+                    placeholder="Добавить локацию"
+                />
+                <button type="button" onClick={handleAddLocation}>
+                    Добавить локацию
+                </button>
+                <button type="submit" style={{ marginTop: "20px" }}>
+                    Создать
+                </button>
             </form>
         </div>
     );

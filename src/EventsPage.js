@@ -81,7 +81,7 @@ const EventsPage = () => {
             <ul>
                 {getSortedEvents().map((event) => (
                     <li key={event.id}>
-                        <h3 onClick={() => handleEditEvent(event.id)} style={{cursor: "pointer", color: "blue"}}>
+                        <h3 onClick={() => isAdmin && handleEditEvent(event.id)} style={{cursor: "pointer", color: "blue"}}>
                             {event.name}
                         </h3>
                         <p>Дата: {new Date(event.dateTime).toLocaleString()}</p>

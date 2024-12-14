@@ -73,7 +73,7 @@ const EditActivityPage = () => {
         try {
             const updatedActivity = { ...activity, languages: selectedLanguages, locations };
             await apiClient.post(`http://localhost:8081/admin/events-api/${eventId}/edit-activity/${activityId}`, updatedActivity);
-            navigate(`/activities/${activityId}`);
+            navigate(`/events/${eventId}/activities`);
         } catch (error) {
             console.error("Ошибка сохранения мероприятия:", error);
         }
