@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import {useParams, useNavigate, Link} from "react-router-dom";
 import apiClient from "./apiClient";
 
 const EditEventPage = () => {
@@ -44,6 +44,9 @@ const EditEventPage = () => {
 
     return (
         <div style={{ maxWidth: "600px", margin: "50px auto", textAlign: "center" }}>
+            <Link to="/events" style={{ textDecoration: "none", color: "blue", fontSize: "18px" }}>
+                Вернуться на главную страницу
+            </Link>
             <h2>Редактировать событие</h2>
             <label>
                 Имя:

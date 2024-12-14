@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "./apiClient";
-import { useParams, useNavigate } from "react-router-dom";
+import {useParams, useNavigate, Link} from "react-router-dom";
 
 const EditActivityPage = () => {
     const { activityId } = useParams();
@@ -83,6 +83,9 @@ const EditActivityPage = () => {
 
     return (
         <div style={{ maxWidth: "800px", margin: "50px auto" }}>
+            <Link to="/events" style={{ textDecoration: "none", color: "blue", fontSize: "18px" }}>
+                Вернуться на главную страницу
+            </Link>
             <h2>Редактирование мероприятия</h2>
 
             <label>

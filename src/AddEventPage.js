@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import apiClient from "./apiClient";
-import { useNavigate } from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const AddEventPage = () => {
     const [eventData, setEventData] = useState({
@@ -34,6 +34,9 @@ const AddEventPage = () => {
 
     return (
         <div style={{ maxWidth: "400px", margin: "50px auto", textAlign: "center" }}>
+            <Link to="/events" style={{ textDecoration: "none", color: "blue", fontSize: "18px" }}>
+                Вернуться на главную страницу
+            </Link>
             <h2>Добавить событие</h2>
             <form onSubmit={handleSubmit}>
                 <div>
