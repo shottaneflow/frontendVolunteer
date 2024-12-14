@@ -16,6 +16,10 @@ const AddActivityPage = () => {
         const { name, value } = e.target;
         setFormData({ ...formData, [name]: value });
     };
+    const getMinDateTime = () => {
+        const now = new Date();
+        return now.toISOString().slice(0, 16); // Формат для <input type="datetime-local">
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -56,6 +60,7 @@ const AddActivityPage = () => {
                         name="startDate"
                         value={formData.startDate}
                         onChange={handleChange}
+                        min={getMinDateTime()}
                         required
                     />
                 </div>

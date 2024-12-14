@@ -64,6 +64,9 @@ const EventsPage = () => {
     const handleSortDesc = () => {
         setSortOrder("desc");
     };
+    const handleEditEvent = (eventId) => {
+        navigate(`/events/${eventId}/edit`);
+    };
 
     return (
         <div style={{ maxWidth: "800px", margin: "50px auto", textAlign: "center" }}>
@@ -78,7 +81,9 @@ const EventsPage = () => {
             <ul>
                 {getSortedEvents().map((event) => (
                     <li key={event.id}>
-                        <h3>{event.name}</h3>
+                        <h3 onClick={() => handleEditEvent(event.id)} style={{cursor: "pointer", color: "blue"}}>
+                            {event.name}
+                        </h3>
                         <p>Дата: {new Date(event.dateTime).toLocaleString()}</p>
                         <p>Тип: {event.type}</p>
                         <p>Требуемые волонтеры: {event.requiredVolunteers}</p>

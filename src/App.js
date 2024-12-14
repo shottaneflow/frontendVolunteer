@@ -6,6 +6,8 @@ import AddEventPage from "./AddEventPage";
 import EventsPage from "./EventsPage";
 import ActivitiesPage from "./ActivitiesPage";
 import AddActivityPage from "./AddActivityPage";
+import EditEventPage from "./EditEventPage";
+import EditActivityPage from "./EditActivityPage";
 
 function App() {
 
@@ -20,6 +22,8 @@ function App() {
             <Route path="/events" element={<EventsPage />} />
             <Route path="/events/:id/activities" element={<ActivitiesPage />} />
             <Route path="/events/:id/activities/create" element={<AddActivityPage />} />
+            <Route path="/events/:id/edit" element={<EditEventPage />} />
+            <Route path="/events/:eventId/activity/:activityId/edit" element={<EditActivityPage />} />
         </Routes>
       </Router>
   );

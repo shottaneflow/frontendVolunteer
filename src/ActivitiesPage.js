@@ -55,6 +55,10 @@ const ActivitiesPage = () => {
         navigate(`/events/${eventId}/activities/create`);
     };
 
+    const handleEditActivity = (activityId) => {
+        navigate(`/events/${eventId}/activity/${activityId}/edit`);
+    };
+
     return (
         <div style={{ maxWidth: "800px", margin: "50px auto", textAlign: "center" }}>
             <h2>Мероприятия для события {eventId}</h2>
@@ -68,7 +72,12 @@ const ActivitiesPage = () => {
             <ul>
                 {getSortedActivities().map((activity) => (
                     <li key={activity.id}>
-                        <h3>{activity.name}</h3>
+                        <h3
+                            onClick={() => handleEditActivity(activity.id)}
+                            style={{ cursor: "pointer", color: "blue", textDecoration: "underline" }}
+                        >
+                            {activity.name}
+                        </h3>
                         <p>Дата начала: {new Date(activity.startDate).toLocaleDateString()}</p>
                         <p>Требуемые волонтеры: {activity.requiredVolunteers}</p>
                         <p>Зарегистрированные волонтеры: {activity.registeredVolunteers}</p>
