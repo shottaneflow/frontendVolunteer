@@ -14,36 +14,37 @@ const LoginForm = () => {
             const response = await axios.post("http://localhost:8081/auth-api", { username, password });
 
             if (response.status === 200) {
-                const { token, roles } = response.data;  // Извлекаем токен и роли из ответа
+                const { token, roles } = response.data;
 
-                // Сохраняем токен и роли в localStorage
+                // Сохраняем токен и роли
                 localStorage.setItem("jwtToken", token);
-                localStorage.setItem("userRoles", JSON.stringify(roles));  // Роли сохраняем как строку JSON
+                localStorage.setItem("userRoles", JSON.stringify(roles));
 
                 console.log("Авторизация успешна!", response.data);
                 console.log("Роли пользователя:", roles);
 
                 // Перенаправление на страницу событий
                 window.location.href = "/events";
-            } else {
-                setErrorMessage(response.data.message || "Ошибка авторизации");
             }
         } catch (error) {
-            console.error("Ошибка при авторизации:", error);
-
+            // Если ошибка от сервера
             if (error.response) {
-                if (error.response.status === 409) {
-                    setErrorMessage("Подтвердите свой email.");
-                } else if (error.response.status === 401) {
-                    setErrorMessage("Неправильный логин или пароль.");
+                const { status, message } = error.response.data;
+
+                if (status === 401) {
+                    setErrorMessage(message); // Показываем сообщение сервера (логин/пароль неверны)
+                } else if (status === 409) {
+                    setErrorMessage("Подтвердите ваш email."); // Обработка ошибки подтверждения email
                 } else {
-                    setErrorMessage("Произошла ошибка, попробуйте позже.");
+                    setErrorMessage("Неправильный логин.");
                 }
             } else {
+                // Если ошибка вне сервера (например, недоступность API)
                 setErrorMessage("Произошла ошибка, попробуйте позже.");
             }
         }
     };
+
 
     return (
         <div style={{ maxWidth: "400px", margin: "50px auto", textAlign: "center" }}>

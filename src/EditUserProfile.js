@@ -29,7 +29,17 @@ const EditUserProfilePage = () => {
                 const languageResponse = await apiClient.get("http://localhost:8081/language-api/all-languages");
                 setLanguages(languageResponse.data);
             } catch (error) {
-                console.error("Ошибка загрузки данных пользователя или языков:", error);
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        navigate("/404"); // Перенаправляем на страницу 404
+                    } else if (error.response.status === 401) {
+                        navigate("/401"); // Перенаправляем на страницу 401
+                    } else {
+                        console.error("Ошибка при загрузке событий:", error);
+                    }
+                } else {
+                    console.error("Ошибка сети или сервер недоступен:", error);
+                }
             }
         };
 
@@ -60,8 +70,17 @@ const EditUserProfilePage = () => {
             alert("Профиль успешно обновлён!");
             navigate("/events");
         } catch (error) {
-            console.error("Ошибка при обновлении профиля:", error);
-            alert("Не удалось обновить профиль.");
+            if (error.response) {
+                if (error.response.status === 404) {
+                    navigate("/404"); // Перенаправляем на страницу 404
+                } else if (error.response.status === 401) {
+                    navigate("/401"); // Перенаправляем на страницу 401
+                } else {
+                    console.error("Ошибка при загрузке событий:", error);
+                }
+            } else {
+                console.error("Ошибка сети или сервер недоступен:", error);
+            }
         }
     };
     const getMaxDate = () => {

@@ -21,7 +21,17 @@ const EditActivityPage = () => {
                 setSelectedLanguages(response.data.languages || []);
                 setLocations(response.data.locations || []);
             } catch (error) {
-                console.error("Ошибка загрузки мероприятия:", error);
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        navigate("/404"); // Перенаправляем на страницу 404
+                    } else if (error.response.status === 401) {
+                        navigate("/401"); // Перенаправляем на страницу 401
+                    } else {
+                        console.error("Ошибка при загрузке событий:", error);
+                    }
+                } else {
+                    console.error("Ошибка сети или сервер недоступен:", error);
+                }
             }
         };
 
@@ -31,7 +41,17 @@ const EditActivityPage = () => {
                 const response = await apiClient.get("http://localhost:8081/language-api/all-languages");
                 setLanguages(response.data);
             } catch (error) {
-                console.error("Ошибка загрузки языков:", error);
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        navigate("/404"); // Перенаправляем на страницу 404
+                    } else if (error.response.status === 401) {
+                        navigate("/401"); // Перенаправляем на страницу 401
+                    } else {
+                        console.error("Ошибка при загрузке событий:", error);
+                    }
+                } else {
+                    console.error("Ошибка сети или сервер недоступен:", error);
+                }
             }
         };
 
@@ -75,7 +95,17 @@ const EditActivityPage = () => {
             await apiClient.post(`http://localhost:8081/admin/events-api/${eventId}/edit-activity/${activityId}`, updatedActivity);
             navigate(`/events/${eventId}/activities`);
         } catch (error) {
-            console.error("Ошибка сохранения мероприятия:", error);
+            if (error.response) {
+                if (error.response.status === 404) {
+                    navigate("/404"); // Перенаправляем на страницу 404
+                } else if (error.response.status === 401) {
+                    navigate("/401"); // Перенаправляем на страницу 401
+                } else {
+                    console.error("Ошибка при загрузке событий:", error);
+                }
+            } else {
+                console.error("Ошибка сети или сервер недоступен:", error);
+            }
         }
     };
 

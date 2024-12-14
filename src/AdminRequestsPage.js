@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "./apiClient";
-import {Link} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 
 const AdminRequestsPage = () => {
     const [requests, setRequests] = useState([]);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchRequests = async () => {
@@ -11,7 +12,17 @@ const AdminRequestsPage = () => {
                 const response = await apiClient.get("http://localhost:8081/admin/request-api/all-requests");
                 setRequests(response.data);
             } catch (error) {
-                console.error("Ошибка при загрузке заявок:", error);
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        navigate("/404"); // Перенаправляем на страницу 404
+                    } else if (error.response.status === 401) {
+                        navigate("/401"); // Перенаправляем на страницу 401
+                    } else {
+                        console.error("Ошибка при загрузке событий:", error);
+                    }
+                } else {
+                    console.error("Ошибка сети или сервер недоступен:", error);
+                }
             }
         };
 
@@ -23,7 +34,17 @@ const AdminRequestsPage = () => {
             await apiClient.post(`http://localhost:8081/admin/request-api/accept/${requestId}`);
             setRequests(requests.filter((req) => req.id !== requestId));
         } catch (error) {
-            console.error("Ошибка при принятии заявки:", error);
+            if (error.response) {
+                if (error.response.status === 404) {
+                    navigate("/404"); // Перенаправляем на страницу 404
+                } else if (error.response.status === 401) {
+                    navigate("/401"); // Перенаправляем на страницу 401
+                } else {
+                    console.error("Ошибка при загрузке событий:", error);
+                }
+            } else {
+                console.error("Ошибка сети или сервер недоступен:", error);
+            }
         }
     };
 
@@ -32,7 +53,17 @@ const AdminRequestsPage = () => {
             await apiClient.post(`http://localhost:8081/admin/request-api/reject/${requestId}`);
             setRequests(requests.filter((req) => req.id !== requestId));
         } catch (error) {
-            console.error("Ошибка при отклонении заявки:", error);
+            if (error.response) {
+                if (error.response.status === 404) {
+                    navigate("/404"); // Перенаправляем на страницу 404
+                } else if (error.response.status === 401) {
+                    navigate("/401"); // Перенаправляем на страницу 401
+                } else {
+                    console.error("Ошибка при загрузке событий:", error);
+                }
+            } else {
+                console.error("Ошибка сети или сервер недоступен:", error);
+            }
         }
     };
 

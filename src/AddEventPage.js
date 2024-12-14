@@ -23,7 +23,17 @@ const AddEventPage = () => {
             await apiClient.post("/admin/events-api/create-event", eventData);
             navigate("/events");
         } catch (error) {
-            console.error("Ошибка при добавлении события:", error);
+            if (error.response) {
+                if (error.response.status === 404) {
+                    navigate("/404"); // Перенаправляем на страницу 404
+                } else if (error.response.status === 401) {
+                    navigate("/401"); // Перенаправляем на страницу 401
+                } else {
+                    console.error("Ошибка при загрузке событий:", error);
+                }
+            } else {
+                console.error("Ошибка сети или сервер недоступен:", error);
+            }
         }
     };
 

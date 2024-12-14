@@ -12,6 +12,8 @@ import EditUserProfilePage from "./EditUserProfile";
 import UserRequestsPage from "./UserRequestsPage";
 import AdminRequestsPage from "./AdminRequestsPage";
 import DeveloperPage from "./DeveloperPage";
+import UnauthorizedPage from "./UnauthorizedPage";
+import NotFoundPage from "./NotFoundPage";
 
 function App() {
 
@@ -33,6 +35,9 @@ function App() {
             <Route path="/myRequests" element={<UserRequestsPage />} />
             <Route path="/requests" element={<AdminRequestsPage />} />
             <Route path="/about-developers" element={<DeveloperPage />} />
+            <Route path="/404" element={<NotFoundPage />} />
+            <Route path="/401" element={<UnauthorizedPage />} />
+            <Route path="*" element={<NotFoundPage />} />
         </Routes>
       </Router>
   );

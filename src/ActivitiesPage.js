@@ -30,7 +30,17 @@ const ActivitiesPage = () => {
                 );
                 setActivities(response.data);
             } catch (error) {
-                console.error("Ошибка при загрузке мероприятий:", error);
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        navigate("/404"); // Перенаправляем на страницу 404
+                    } else if (error.response.status === 401) {
+                        navigate("/401"); // Перенаправляем на страницу 401
+                    } else {
+                        console.error("Ошибка при загрузке событий:", error);
+                    }
+                } else {
+                    console.error("Ошибка сети или сервер недоступен:", error);
+                }
             }
         };
 
@@ -40,7 +50,17 @@ const ActivitiesPage = () => {
                 const response = await apiClient.get("http://localhost:8081/request-api/my-requests");
                 setUserRequests(response.data); // Сохраняем заявки пользователя
             } catch (error) {
-                console.error("Ошибка при загрузке заявок пользователя:", error);
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        navigate("/404"); // Перенаправляем на страницу 404
+                    } else if (error.response.status === 401) {
+                        navigate("/401"); // Перенаправляем на страницу 401
+                    } else {
+                        console.error("Ошибка при загрузке событий:", error);
+                    }
+                } else {
+                    console.error("Ошибка сети или сервер недоступен:", error);
+                }
             }
         };
 
@@ -77,8 +97,17 @@ const ActivitiesPage = () => {
             const response = await apiClient.get("http://localhost:8081/request-api/my-requests");
             setUserRequests(response.data);
         } catch (error) {
-            console.error("Ошибка при подаче заявки:", error);
-            alert("Не удалось подать заявку. Попробуйте позже.");
+            if (error.response) {
+                if (error.response.status === 404) {
+                    navigate("/404"); // Перенаправляем на страницу 404
+                } else if (error.response.status === 401) {
+                    navigate("/401"); // Перенаправляем на страницу 401
+                } else {
+                    console.error("Ошибка при загрузке событий:", error);
+                }
+            } else {
+                console.error("Ошибка сети или сервер недоступен:", error);
+            }
         }
     };
 
@@ -88,7 +117,17 @@ const ActivitiesPage = () => {
             await apiClient.delete(`http://localhost:8081/admin/events-api/${eventId}/delete-activity/${activityId}`);
             setActivities(activities.filter((activity) => activity.id !== activityId));
         } catch (error) {
-            console.error("Ошибка при удалении мероприятия:", error);
+            if (error.response) {
+                if (error.response.status === 404) {
+                    navigate("/404"); // Перенаправляем на страницу 404
+                } else if (error.response.status === 401) {
+                    navigate("/401"); // Перенаправляем на страницу 401
+                } else {
+                    console.error("Ошибка при загрузке событий:", error);
+                }
+            } else {
+                console.error("Ошибка сети или сервер недоступен:", error);
+            }
         }
     };
 

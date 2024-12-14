@@ -13,7 +13,17 @@ const EditEventPage = () => {
                 const response = await apiClient.get(`http://localhost:8081/admin/events-api/events/${id}`);
                 setEvent(response.data);
             } catch (error) {
-                console.error("Ошибка при загрузке события:", error);
+                if (error.response) {
+                    if (error.response.status === 404) {
+                        navigate("/404"); // Перенаправляем на страницу 404
+                    } else if (error.response.status === 401) {
+                        navigate("/401"); // Перенаправляем на страницу 401
+                    } else {
+                        console.error("Ошибка при загрузке событий:", error);
+                    }
+                } else {
+                    console.error("Ошибка сети или сервер недоступен:", error);
+                }
             }
         };
 
@@ -30,7 +40,17 @@ const EditEventPage = () => {
             await apiClient.post(`http://localhost:8081/admin/events-api/${id}/edit-event`, event);
             navigate("/events");
         } catch (error) {
-            console.error("Ошибка при сохранении события:", error);
+            if (error.response) {
+                if (error.response.status === 404) {
+                    navigate("/404"); // Перенаправляем на страницу 404
+                } else if (error.response.status === 401) {
+                    navigate("/401"); // Перенаправляем на страницу 401
+                } else {
+                    console.error("Ошибка при загрузке событий:", error);
+                }
+            } else {
+                console.error("Ошибка сети или сервер недоступен:", error);
+            }
         }
     };
     const getMinDateTime = () => {
