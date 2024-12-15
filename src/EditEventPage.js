@@ -1,12 +1,16 @@
 import React, { useEffect, useState } from "react";
-import {useParams, useNavigate, Link} from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import apiClient from "./apiClient";
-import {handleError} from "./errorHandler";
+import { handleError } from "./errorHandler";
 
 const EditEventPage = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [event, setEvent] = useState(null);
+
+    // Списки для типов и статусов событий
+    const eventTypes = ["Культурное", "Спортивное", "Социальное"];
+    const eventStatuses = ["Международный", "Районный", "Городской", "Всероссийский"];
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -34,6 +38,7 @@ const EditEventPage = () => {
             handleError(error, navigate);
         }
     };
+
     const getMinDateTime = () => {
         const now = new Date();
         return now.toISOString().slice(0, 16); // Формат для <input type="datetime-local">
@@ -56,17 +61,31 @@ const EditEventPage = () => {
             <br />
             <label>
                 Время:
-                <input type="datetime-local" name="dateTime" value={event.dateTime} onChange={handleInputChange}  min={getMinDateTime()} />
+                <input type="datetime-local" name="dateTime" value={event.dateTime} onChange={handleInputChange} min={getMinDateTime()} />
             </label>
             <br />
             <label>
                 Тип:
-                <input type="text" name="type" value={event.type} onChange={handleInputChange} />
+                <select name="type" value={event.type} onChange={handleInputChange}>
+                    <option value="">Выберите тип</option>
+                    {eventTypes.map((type) => (
+                        <option key={type} value={type}>
+                            {type}
+                        </option>
+                    ))}
+                </select>
             </label>
             <br />
             <label>
                 Статус:
-                <input type="text" name="status" value={event.status} onChange={handleInputChange} />
+                <select name="status" value={event.status} onChange={handleInputChange}>
+                    <option value="">Выберите статус</option>
+                    {eventStatuses.map((status) => (
+                        <option key={status} value={status}>
+                            {status}
+                        </option>
+                    ))}
+                </select>
             </label>
             <br />
             <label>

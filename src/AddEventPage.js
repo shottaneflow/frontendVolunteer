@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import apiClient from "./apiClient";
-import {Link, useNavigate} from "react-router-dom";
-import {handleError} from "./errorHandler";
+import { Link, useNavigate } from "react-router-dom";
+import { handleError } from "./errorHandler";
 
 const AddEventPage = () => {
     const [eventData, setEventData] = useState({
@@ -57,19 +57,23 @@ const AddEventPage = () => {
                         name="dateTime"
                         value={eventData.dateTime}
                         onChange={handleChange}
-                        min={getMinDateTime()}// Ограничение максимальной даты
+                        min={getMinDateTime()}
                         required
                     />
                 </div>
                 <div>
                     <label>Тип:</label>
-                    <input
-                        type="text"
+                    <select
                         name="type"
                         value={eventData.type}
                         onChange={handleChange}
                         required
-                    />
+                    >
+                        <option value="" disabled>Выберите тип</option>
+                        <option value="Культурное">Культурное</option>
+                        <option value="Спортивное">Спортивное</option>
+                        <option value="Социальное">Социальное</option>
+                    </select>
                 </div>
                 <div>
                     <label>Требуемые волонтеры:</label>
@@ -79,18 +83,23 @@ const AddEventPage = () => {
                         value={eventData.requiredVolunteers}
                         onChange={handleChange}
                         required
-                        min="1" // Минимальное количество волонтеров
+                        min="1"
                     />
                 </div>
                 <div>
                     <label>Статус:</label>
-                    <input
-                        type="text"
+                    <select
                         name="status"
                         value={eventData.status}
                         onChange={handleChange}
                         required
-                    />
+                    >
+                        <option value="" disabled>Выберите статус</option>
+                        <option value="Международный">Международный</option>
+                        <option value="Районный">Районный</option>
+                        <option value="Городской">Городской</option>
+                        <option value="Всероссийский">Всероссийский</option>
+                    </select>
                 </div>
                 <button type="submit">Добавить</button>
             </form>
