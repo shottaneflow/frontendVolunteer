@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "./apiClient";
 import { useNavigate } from "react-router-dom";
+import {handleError} from "./errorHandler";
 
 const EventsPage = () => {
     const [events, setEvents] = useState([]);
@@ -21,17 +22,7 @@ const EventsPage = () => {
                     : "http://localhost:8081/events-api/all-events");
                 setEvents(response.data);
             } catch (error) {
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        navigate("/404"); // Перенаправляем на страницу 404
-                    } else if (error.response.status === 401) {
-                        navigate("/401"); // Перенаправляем на страницу 401
-                    } else {
-                        console.error("Ошибка при загрузке событий:", error);
-                    }
-                } else {
-                    console.error("Ошибка сети или сервер недоступен:", error);
-                }
+                handleError(error, navigate);
             }
         };
 
@@ -64,17 +55,7 @@ const EventsPage = () => {
             await apiClient.delete(`http://localhost:8081/admin/events-api/events/${id}`);
             setEvents(events.filter((event) => event.id !== id)); // Обновляем локальный список
         } catch (error) {
-            if (error.response) {
-                if (error.response.status === 404) {
-                    navigate("/404"); // Перенаправляем на страницу 404
-                } else if (error.response.status === 401) {
-                    navigate("/401"); // Перенаправляем на страницу 401
-                } else {
-                    console.error("Ошибка при загрузке событий:", error);
-                }
-            } else {
-                console.error("Ошибка сети или сервер недоступен:", error);
-            }
+            handleError(error, navigate);
         }
     };
 

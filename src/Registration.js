@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import axios from 'axios';
+import {handleError} from "./errorHandler";
+import { useNavigate } from "react-router-dom";
 
 function Registration() {
     const [username, setUsername] = useState('');
@@ -8,6 +10,7 @@ function Registration() {
     const [error, setError] = useState(null);
     const [success, setSuccess] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false); // состояние для модального окна
+    const navigate = useNavigate();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -25,12 +28,8 @@ function Registration() {
                 setSuccess(true); // успешно зарегистрировано
                 setIsModalOpen(true); // открываем модальное окно
             }
-        } catch (err) {
-            if (err.response && err.response.status === 409) {
-                setError('Пользователь с таким именем или почтой уже существует.');
-            } else {
-                setError('Ошибка при регистрации. Попробуйте снова.');
-            }
+        } catch (error) {
+            handleError(error, navigate);
         }
     };
 

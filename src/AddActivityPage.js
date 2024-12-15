@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "./apiClient";
 import {useParams, useNavigate, Link} from "react-router-dom";
+import {handleError} from "./errorHandler";
 
 const AddActivityPage = () => {
     const { id: eventId } = useParams();
@@ -22,17 +23,7 @@ const AddActivityPage = () => {
                 const response = await apiClient.get("http://localhost:8081/language-api/all-languages");
                 setLanguages(response.data);
             } catch (error) {
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        navigate("/404"); // Перенаправляем на страницу 404
-                    } else if (error.response.status === 401) {
-                        navigate("/401"); // Перенаправляем на страницу 401
-                    } else {
-                        console.error("Ошибка при загрузке событий:", error);
-                    }
-                } else {
-                    console.error("Ошибка сети или сервер недоступен:", error);
-                }
+                handleError(error, navigate);
             }
         };
         fetchLanguages();
@@ -80,17 +71,7 @@ const AddActivityPage = () => {
             alert("Мероприятие успешно создано!");
             navigate(`/events/${eventId}/activities`);
         } catch (error) {
-            if (error.response) {
-                if (error.response.status === 404) {
-                    navigate("/404"); // Перенаправляем на страницу 404
-                } else if (error.response.status === 401) {
-                    navigate("/401"); // Перенаправляем на страницу 401
-                } else {
-                    console.error("Ошибка при загрузке событий:", error);
-                }
-            } else {
-                console.error("Ошибка сети или сервер недоступен:", error);
-            }
+            handleError(error, navigate);
         }
     };
 

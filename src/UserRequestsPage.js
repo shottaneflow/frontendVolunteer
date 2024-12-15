@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "./apiClient";
 import {Link, useNavigate} from "react-router-dom";
+import {handleError} from "./errorHandler";
 
 const UserRequestsPage = () => {
     const [requests, setRequests] = useState([]);
@@ -12,17 +13,7 @@ const UserRequestsPage = () => {
                 const response = await apiClient.get("http://localhost:8081/request-api/my-requests");
                 setRequests(response.data);
             } catch (error) {
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        navigate("/404"); // Перенаправляем на страницу 404
-                    } else if (error.response.status === 401) {
-                        navigate("/401"); // Перенаправляем на страницу 401
-                    } else {
-                        console.error("Ошибка при загрузке событий:", error);
-                    }
-                } else {
-                    console.error("Ошибка сети или сервер недоступен:", error);
-                }
+                handleError(error, navigate);
             }
         };
 

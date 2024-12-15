@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import apiClient from "./apiClient";
 import {Link, useParams} from "react-router-dom";
 import { useNavigate } from "react-router-dom";
+import {handleError} from "./errorHandler";
 
 const ActivitiesPage = () => {
     const { id: eventId } = useParams();
@@ -30,17 +31,7 @@ const ActivitiesPage = () => {
                 );
                 setActivities(response.data);
             } catch (error) {
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        navigate("/404"); // Перенаправляем на страницу 404
-                    } else if (error.response.status === 401) {
-                        navigate("/401"); // Перенаправляем на страницу 401
-                    } else {
-                        console.error("Ошибка при загрузке событий:", error);
-                    }
-                } else {
-                    console.error("Ошибка сети или сервер недоступен:", error);
-                }
+                handleError(error, navigate);
             }
         };
 
@@ -50,17 +41,7 @@ const ActivitiesPage = () => {
                 const response = await apiClient.get("http://localhost:8081/request-api/my-requests");
                 setUserRequests(response.data); // Сохраняем заявки пользователя
             } catch (error) {
-                if (error.response) {
-                    if (error.response.status === 404) {
-                        navigate("/404"); // Перенаправляем на страницу 404
-                    } else if (error.response.status === 401) {
-                        navigate("/401"); // Перенаправляем на страницу 401
-                    } else {
-                        console.error("Ошибка при загрузке событий:", error);
-                    }
-                } else {
-                    console.error("Ошибка сети или сервер недоступен:", error);
-                }
+                handleError(error, navigate);
             }
         };
 
@@ -97,17 +78,7 @@ const ActivitiesPage = () => {
             const response = await apiClient.get("http://localhost:8081/request-api/my-requests");
             setUserRequests(response.data);
         } catch (error) {
-            if (error.response) {
-                if (error.response.status === 404) {
-                    navigate("/404"); // Перенаправляем на страницу 404
-                } else if (error.response.status === 401) {
-                    navigate("/401"); // Перенаправляем на страницу 401
-                } else {
-                    console.error("Ошибка при загрузке событий:", error);
-                }
-            } else {
-                console.error("Ошибка сети или сервер недоступен:", error);
-            }
+            handleError(error, navigate);
         }
     };
 
@@ -117,17 +88,7 @@ const ActivitiesPage = () => {
             await apiClient.delete(`http://localhost:8081/admin/events-api/${eventId}/delete-activity/${activityId}`);
             setActivities(activities.filter((activity) => activity.id !== activityId));
         } catch (error) {
-            if (error.response) {
-                if (error.response.status === 404) {
-                    navigate("/404"); // Перенаправляем на страницу 404
-                } else if (error.response.status === 401) {
-                    navigate("/401"); // Перенаправляем на страницу 401
-                } else {
-                    console.error("Ошибка при загрузке событий:", error);
-                }
-            } else {
-                console.error("Ошибка сети или сервер недоступен:", error);
-            }
+            handleError(error, navigate);
         }
     };
 

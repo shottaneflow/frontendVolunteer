@@ -1,10 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
+import { handleError } from "./errorHandler";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
+    const navigate = useNavigate();
+
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -27,21 +31,7 @@ const LoginForm = () => {
                 window.location.href = "/events";
             }
         } catch (error) {
-            // Если ошибка от сервера
-            if (error.response) {
-                const { status, message } = error.response.data;
-
-                if (status === 401) {
-                    setErrorMessage(message); // Показываем сообщение сервера (логин/пароль неверны)
-                } else if (status === 409) {
-                    setErrorMessage("Подтвердите ваш email."); // Обработка ошибки подтверждения email
-                } else {
-                    setErrorMessage("Неправильный логин.");
-                }
-            } else {
-                // Если ошибка вне сервера (например, недоступность API)
-                setErrorMessage("Произошла ошибка, попробуйте позже.");
-            }
+            handleError(error, navigate);
         }
     };
 
