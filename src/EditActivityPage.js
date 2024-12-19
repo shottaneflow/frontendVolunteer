@@ -57,22 +57,28 @@ const EditActivityPage = () => {
 
     const handleAddLocation = () => {
         if (newLocation.trim()) {
-            setLocations((prev) => [...prev, { id: null, name: newLocation.trim() }]);
+            const tempId = Date.now(); // Временный уникальный ID
+            setLocations((prev) => [...prev, { id: null, tempId, name: newLocation.trim() }]);
             setNewLocation("");
         }
     };
+
     const getMinDateTime = () => {
         const now = new Date();
         return now.toISOString().slice(0, 16); // Формат для <input type="datetime-local">
     };
 
-    const handleDeleteLocation = (id) => {
-        setLocations((prev) => prev.filter((location) => location.id !== id));
+    const handleDeleteLocation = (idOrTempId) => {
+        setLocations((prev) =>
+            prev.filter((location) => location.id !== idOrTempId && location.tempId !== idOrTempId)
+        );
     };
+
 
     const handleSave = async () => {
         try {
-            const updatedActivity = { ...activity, languages: selectedLanguages, locations };
+            const updatedLocations = locations.map(({ tempId, ...rest }) => rest); // Удаляем tempId
+            const updatedActivity = { ...activity, languages: selectedLanguages, locations: updatedLocations };
             await apiClient.post(`http://localhost:8081/admin/events-api/${eventId}/edit-activity/${activityId}`, updatedActivity);
             navigate(`/events/${eventId}/activities`);
         } catch (error) {
@@ -134,9 +140,9 @@ const EditActivityPage = () => {
 
             <h3>Локации</h3>
             {locations.map((location) => (
-                <div key={location.id}>
+                <div key={location.id || location.tempId}>
                     {location.name}
-                    <button onClick={() => handleDeleteLocation(location.id)}>Удалить</button>
+                    <button onClick={() => handleDeleteLocation(location.id || location.tempId)}>Удалить</button>
                 </div>
             ))}
             <input
