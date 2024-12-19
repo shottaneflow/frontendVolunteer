@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "./apiClient";
-import {Link, useParams} from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
-import {handleError} from "./errorHandler";
+import { handleError } from "./errorHandler";
 
 const ActivitiesPage = () => {
     const { id: eventId } = useParams();
@@ -10,7 +10,9 @@ const ActivitiesPage = () => {
     const [sortOrder, setSortOrder] = useState(null);
     const [isAdmin, setIsAdmin] = useState(false);
     const [isUser, setIsUser] = useState(false);
-    const [userRequests, setUserRequests] = useState([]); // Для хранения заявок пользователя
+    const [userRequests, setUserRequests] = useState([]);
+    const [languages, setLanguages] = useState([]); // Все доступные языки
+    const [selectedLanguages, setSelectedLanguages] = useState([]); // Выбранные языки для фильтрации
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -21,7 +23,6 @@ const ActivitiesPage = () => {
         setIsAdmin(adminRole);
         setIsUser(userRole);
 
-        // Функция для загрузки мероприятий
         const fetchActivities = async () => {
             try {
                 const response = await apiClient.get(
@@ -35,11 +36,19 @@ const ActivitiesPage = () => {
             }
         };
 
-        // Функция для загрузки заявок пользователя
         const fetchUserRequests = async () => {
             try {
                 const response = await apiClient.get("http://localhost:8081/request-api/my-requests");
-                setUserRequests(response.data); // Сохраняем заявки пользователя
+                setUserRequests(response.data);
+            } catch (error) {
+                handleError(error, navigate);
+            }
+        };
+
+        const fetchLanguages = async () => {
+            try {
+                const response = await apiClient.get("http://localhost:8081/language-api/all-languages");
+                setLanguages(response.data);
             } catch (error) {
                 handleError(error, navigate);
             }
@@ -47,9 +56,21 @@ const ActivitiesPage = () => {
 
         fetchActivities();
         fetchUserRequests();
+        fetchLanguages();
     }, [eventId]);
 
-    // Функция для сортировки мероприятий
+    const getFilteredActivities = () => {
+        const sortedActivities = getSortedActivities();
+        if (selectedLanguages.length === 0) {
+            return sortedActivities;
+        }
+        return sortedActivities.filter(activity =>
+            activity.languages.some(language =>
+                selectedLanguages.includes(language.id)
+            )
+        );
+    };
+
     const getSortedActivities = () => {
         if (sortOrder === null) {
             return activities;
@@ -69,51 +90,22 @@ const ActivitiesPage = () => {
         setSortOrder("desc");
     };
 
-    // Функция для подачи заявки
-    const handleSubmitRequest = async (activityId) => {
-        try {
-            await apiClient.post(`http://localhost:8081/request-api/add-request/${activityId}`);
-            alert("Заявка успешно подана!");
-            // После подачи заявки, обновляем список заявок
-            const response = await apiClient.get("http://localhost:8081/request-api/my-requests");
-            setUserRequests(response.data);
-        } catch (error) {
-            handleError(error, navigate);
-        }
-    };
-
-    // Функции для удаления, добавления и редактирования мероприятия
-    const handleDeleteActivity = async (activityId) => {
-        try {
-            await apiClient.delete(`http://localhost:8081/admin/events-api/${eventId}/delete-activity/${activityId}`);
-            setActivities(activities.filter((activity) => activity.id !== activityId));
-        } catch (error) {
-            handleError(error, navigate);
-        }
-    };
-
-    const handleAddActivity = () => {
-        navigate(`/events/${eventId}/activities/create`);
-    };
-
-    const handleEditActivity = (activityId) => {
-        navigate(`/events/${eventId}/activity/${activityId}/edit`);
-    };
-
-    // Проверка, подал ли пользователь заявку на мероприятие
-    const hasUserSubmittedRequest = (activityId) => {
-        return userRequests.some(request => request.activity.id === activityId);
+    const toggleLanguage = (languageId) => {
+        setSelectedLanguages((prevSelected) =>
+            prevSelected.includes(languageId)
+                ? prevSelected.filter((id) => id !== languageId)
+                : [...prevSelected, languageId]
+        );
     };
 
     return (
-
         <div style={{ maxWidth: "800px", margin: "50px auto", textAlign: "center" }}>
             <Link to="/events" style={{ textDecoration: "none", color: "blue", fontSize: "18px" }}>
                 Вернуться на главную страницу
             </Link>
             <h2>Мероприятия для события {eventId}</h2>
             {isAdmin && (
-                <button onClick={handleAddActivity} style={{ marginBottom: "20px" }}>
+                <button onClick={() => navigate(`/events/${eventId}/activities/create`)} style={{ marginBottom: "20px" }}>
                     Добавить мероприятие
                 </button>
             )}
@@ -121,11 +113,24 @@ const ActivitiesPage = () => {
                 <button onClick={handleSortAsc}>Сортировать по возрастанию</button>
                 <button onClick={handleSortDesc}>Сортировать по убыванию</button>
             </div>
+            <h3>Фильтрация по языкам</h3>
+            <div style={{ marginBottom: "20px", textAlign: "left" }}>
+                {languages.map((language) => (
+                    <label key={language.id} style={{ display: "block" }}>
+                        <input
+                            type="checkbox"
+                            checked={selectedLanguages.includes(language.id)}
+                            onChange={() => toggleLanguage(language.id)}
+                        />
+                        {language.name}
+                    </label>
+                ))}
+            </div>
             <ul>
-                {getSortedActivities().map((activity) => (
+                {getFilteredActivities().map((activity) => (
                     <li key={activity.id} style={{ marginBottom: "20px", textAlign: "left" }}>
                         <h3
-                            onClick={() => isAdmin && handleEditActivity(activity.id)}
+                            onClick={() => isAdmin && navigate(`/events/${eventId}/activity/${activity.id}/edit`)}
                             style={{ cursor: isAdmin ? "pointer" : "default", color: "blue", textDecoration: "underline" }}
                         >
                             {activity.name}
@@ -133,35 +138,12 @@ const ActivitiesPage = () => {
                         <p>Дата начала: {new Date(activity.startDate).toLocaleDateString()}</p>
                         <p>Требуемые волонтеры: {activity.requiredVolunteers}</p>
                         <p>Зарегистрированные волонтеры: {activity.registeredVolunteers}</p>
-
-                        <h4>Локации:</h4>
-                        {activity.locations && activity.locations.length > 0 ? (
-                            <ul>
-                                {activity.locations.map((location) => (
-                                    <li key={location.id}>{location.name}</li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>Локации не указаны</p>
-                        )}
-
                         <h4>Языки:</h4>
-                        {activity.languages && activity.languages.length > 0 ? (
-                            <ul>
-                                {activity.languages.map((language) => (
-                                    <li key={language.id}>{language.name}</li>
-                                ))}
-                            </ul>
-                        ) : (
-                            <p>Языки не указаны</p>
-                        )}
-
-                        {isAdmin && (
-                            <button onClick={() => handleDeleteActivity(activity.id)}>Удалить мероприятие</button>
-                        )}
-                        {isUser && activity.registeredVolunteers < activity.requiredVolunteers && !hasUserSubmittedRequest(activity.id) && (
-                            <button onClick={() => handleSubmitRequest(activity.id)}>Подать заявку</button>
-                        )}
+                        {activity.languages.map((language) => (
+                            <span key={language.id} style={{ marginRight: "10px" }}>
+                                {language.name}
+                            </span>
+                        ))}
                     </li>
                 ))}
             </ul>
