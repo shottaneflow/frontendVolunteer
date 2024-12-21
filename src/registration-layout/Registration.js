@@ -49,7 +49,7 @@ function Registration() {
                 type="text"
                 id="username"
                 maxLength="8"
-                minLength="0"
+                minLength="4"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
                 required

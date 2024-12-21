@@ -49,7 +49,7 @@ const LoginForm = () => {
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                     maxLength="8"
-                    minLength="0"
+                    minLength="4"
                     required
                 />
                 <label>Пароль:</label>
