@@ -63,6 +63,9 @@ const LoginForm = () => {
                     required
                 />
                 <button className="login-button" type="submit">Войти</button>
+                <div>
+                    <label>Новенький здесь? </label><a className="login-create-link" href="/registration">Создать аккаунт</a>
+                </div>
             </form>
         </div>
     );

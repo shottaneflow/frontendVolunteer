@@ -76,8 +76,12 @@ function Registration() {
                 onChange={(e) => setEmail(e.target.value)}
                 required
             />
-        <button className="registration-button" type="submit">Зарегистрироваться</button>
+            <button className="registration-button" type="submit">Зарегистрироваться</button>
+            <div>
+                <label>Уже есть аккаунт? </label><a className="registration-create-link" href="/login">Авторизоваться</a>
+            </div>
         </form>
+
 
         {error && <div style={{ color: 'red' }}>{error}</div>}
 
