@@ -97,6 +97,30 @@ const ActivitiesPage = () => {
                 : [...prevSelected, languageId]
         );
     };
+    const handleSubmitRequest = async (activityId) => {
+        try {
+            await apiClient.post(`http://localhost:8081/request-api/add-request/${activityId}`);
+            alert("Заявка успешно подана!");
+// После подачи заявки, обновляем список заявок
+            const response = await apiClient.get("http://localhost:8081/request-api/my-requests");
+            setUserRequests(response.data);
+        } catch (error) {
+            handleError(error, navigate);
+        }
+    };
+    // Функции для удаления, добавления и редактирования мероприятия
+    const handleDeleteActivity = async (activityId) => {
+        try {
+            await apiClient.delete(`http://localhost:8081/admin/events-api/${eventId}/delete-activity/${activityId}`);
+            setActivities(activities.filter((activity) => activity.id !== activityId));
+        } catch (error) {
+            handleError(error, navigate);
+        }
+    };
+    const hasUserSubmittedRequest = (activityId) => {
+        return userRequests.some(request => request.activity.id === activityId);
+    };
+
 
     return (
         <div style={{ maxWidth: "800px", margin: "50px auto", textAlign: "center" }}>
@@ -144,6 +168,12 @@ const ActivitiesPage = () => {
                                 {language.name}
                             </span>
                         ))}
+                        {isAdmin && (
+                            <button onClick={() => handleDeleteActivity(activity.id)}>Удалить мероприятие</button>
+                        )}
+                        {isUser && activity.registeredVolunteers < activity.requiredVolunteers && !hasUserSubmittedRequest(activity.id) && (
+                            <button onClick={() => handleSubmitRequest(activity.id)}>Подать заявку</button>
+                        )}
                     </li>
                 ))}
             </ul>
