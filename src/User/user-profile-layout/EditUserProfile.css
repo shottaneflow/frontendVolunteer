@@ -1,0 +1,66 @@
+.prof_form{
+    margin-top: 5px;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+.birthday{
+    display: flex;
+    flex-direction: column;
+}
+.profile{
+    overflow: hidden;
+    width: 100%;
+    max-width: 600px;
+    margin: 50px auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.link
+{
+    font-size: 12px;
+    display: flex;
+    flex-direction: column;
+    justify-self: left;
+    text-decoration: none;
+    color:rgb(153, 150, 143);
+}
+.link:hover
+{
+    color: rgb(93, 158, 254);
+}
+.window{
+    width: 95%;
+    margin: auto;
+}
+.prof_text{
+    font-size: 22px;
+}
+.submit{
+    height: 45px;
+    max-width: 190px;
+    width: 100%;
+    border-radius: 13px;
+    background-color: rgb(93, 158, 254);
+    color:rgb(255, 255, 255);
+    border: 2px solid black;
+    padding-bottom: 4px;
+}
+textarea{
+    min-height: 150px;
+    overflow: hidden;
+    border-radius: 10px;
+    font-size: 14px;
+    padding: 10px;
+}
+@media (max-width:451px)
+{
+    textarea{
+        left: -10px;
+        border-radius: 0px;
+        position: relative;
+        width: 99%;
+    }
+}

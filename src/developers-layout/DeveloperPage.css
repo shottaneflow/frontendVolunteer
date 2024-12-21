@@ -1,0 +1,15 @@
+.about-developers{
+    width: 500px;
+    margin: 60px auto;
+}
+.without-margin{
+    margin: 7px 0px
+}
+.dev-link{
+    text-decoration: none;
+    color: blue;
+    font-size: 10px;
+}
+.dev-link:hover{
+    color:rgb(153, 150, 143);   
+}

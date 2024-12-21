@@ -1,0 +1,45 @@
+.requests-page{
+
+    max-width: 1000px;
+    margin: 10px auto;
+}
+.requests-link{
+    text-decoration: none;
+    color:rgb(153, 150, 143);
+    font-size: 14px;
+}
+.requests-link:hover{
+    color: rgb(93, 158, 254);
+    
+}
+.row{
+    font-size: 14px;
+    margin-top: 10px;
+    text-align: left;
+    border-top: 1px solid black;
+}
+.requests-button{
+    border: none;
+    width: 50%;
+    background-color: white;
+}
+
+.requests-button:hover{
+    color:rgb(153, 150, 143);
+    background-image:
+    radial-gradient(1px 45% at 0% 50%, rgba(0,0,0,.6), transparent),
+    radial-gradient(1px 45% at 100% 50%, rgba(0,0,0,.6), transparent); 
+}
+
+.margin-top{
+    vertical-align:center;
+    height: 50px;
+}
+.not-found-requests{
+    text-align: center;
+    margin-top: 10px;
+    padding: 50px 0px ;
+    border-top: 1px groove black;
+    border-bottom: 1px outset black;
+    font-size: 30px;
+}

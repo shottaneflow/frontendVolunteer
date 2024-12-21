@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import axios from "axios";
-import { handleError } from "./errorHandler";
+import { handleError } from "../errorHandler";
 import { useNavigate } from "react-router-dom";
+import './LoginForm.css';
 
 const LoginForm = () => {
     const [username, setUsername] = useState("");
@@ -37,29 +38,31 @@ const LoginForm = () => {
 
 
     return (
-        <div style={{ maxWidth: "400px", margin: "50px auto", textAlign: "center" }}>
-            <h2>Авторизация</h2>
+        <div className="login">
+            <h1 style={{marginBottom:"5px"}}>Авторизация</h1>
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <form onSubmit={handleSubmit}>
-                <div>
-                    <label>Имя пользователя:</label>
-                    <input
-                        type="text"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        required
-                    />
-                </div>
-                <div>
-                    <label>Пароль:</label>
-                    <input
-                        type="password"
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        required
-                    />
-                </div>
-                <button type="submit">Войти</button>
+            <form className="login-form"onSubmit={handleSubmit}>
+                <label>Логин:</label>
+                <input 
+                    className="login-input"
+                    type="text"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                    maxLength="8"
+                    minLength="0"
+                    required
+                />
+                <label>Пароль:</label>
+                <input
+                    className="login-input"
+                    type="password"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                    maxLength="100"
+                    minLength="0"
+                    required
+                />
+                <button className="login-button" type="submit">Войти</button>
             </form>
         </div>
     );

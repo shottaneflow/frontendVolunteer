@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "./apiClient";
+import apiClient from "./../../apiClient";
 import {Link, useNavigate} from "react-router-dom";
-import {handleError} from "./errorHandler";
+import {handleError} from "./../../errorHandler";
 
 const UserRequestsPage = () => {
     const [requests, setRequests] = useState([]);
