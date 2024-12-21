@@ -19,7 +19,7 @@ const DeveloperPage = () => {
                 волонтеров"</a>
             </div>
 
-            <h4 className="without-margin">Разработчики:</h4>
+            <h4 className="without-margin">Обучающиеся:</h4>
             
             <ul className="without-margin">
                 <li>Дмитриев Данила Олегович</li>
