@@ -1,0 +1,8 @@
+.about-system-main{
+    width: 580px;
+    margin: 60px auto;
+    overflow-wrap: break-word;
+}
+span{
+    font-weight: 700;
+}
