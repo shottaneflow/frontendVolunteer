@@ -8,20 +8,21 @@ const DeveloperPage = () => {
             <Link to="/events" className="dev-link">
                 на главную
             </Link>
-            <h3 style={{marginTop:"0px"}} className="without-margin">
+            <h3 style={{marginTop: "0px"}} className="without-margin">
                 Сведения о разработчиках
             </h3>
             <a>Лабораторный практикум по дисциплине <br/>
-            "Технология программирования"</a>
-            <div style={{marginTop:"7px"}}>
-                <a>Тема: "Веб-приложение для помощи в<br/> 
-                организации мероприятий с привлечением<br/>
-                волонтеров"</a>
+                "Технология программирования"</a>
+            <div style={{marginTop: "7px"}}>
+                <a>Тема: "Веб-приложение для помощи в<br/>
+                    организации мероприятий с привлечением<br/>
+                    волонтеров"</a>
             </div>
 
-            <h4 className="without-margin">Обучающиеся:</h4>
-            
+            <h4 className="without-margin">Разработчики:</h4>
+            <h4 className="without-margin">Обучающиеся группы 6402-090301D</h4>
             <ul className="without-margin">
+
                 <li>Дмитриев Данила Олегович</li>
                 <li>Артемьев Артем Артемьевич</li>
             </ul>
