@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "./apiClient";
+import apiClient from "../../../apiClient";
 import {useParams, useNavigate, Link} from "react-router-dom";
-import {handleError} from "./errorHandler";
+import {handleError} from "../../../errorHandler";
+import "./AddEditActivityPage.css";
 
 const AddActivityPage = () => {
     const { id: eventId } = useParams();

@@ -1,0 +1,60 @@
+.act-second-column{
+    text-align: center;
+    margin-top: 6px ;
+    border-radius: 8px;
+    height: 14px;
+    vertical-align: top;
+    padding-top: 0px;
+}
+.act-req-vol{
+    width: 99%;;
+    text-align: center;
+    height: 14px;
+    padding: 0px;
+    border-radius: 8px;
+    margin-top: 7px;
+}
+.act-submit{
+    font-size: 18px;
+    border:none;
+    background-color: white;
+    padding: 0px;
+}
+.act-submit:hover{
+    color:rgb(153, 150, 143);
+}
+.act-link{
+    font-size: 10px;
+    text-decoration: none;
+    color: blue;
+}
+.act-link:hover{
+    color:rgb(153, 150, 143);
+}
+.act-add-location{
+    width:51%;
+    border: none;
+    background-color:white;
+    text-align:start;
+    margin-left:10px;
+    margin-top:4px;
+}
+.act-add-location:hover{
+    color:rgb(153, 150, 143);
+}
+.location-form{
+    margin:15px 0px;
+    width: 95%;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+}
+.act-add-form{
+    display:grid;
+    grid-template-columns: auto 1fr;
+    margin: 0px auto;
+    gap: 6px;
+}
+.check-box{
+    border-radius: 20px;
+}

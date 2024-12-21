@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
-import apiClient from "./apiClient";
+import apiClient from "../../../apiClient";
 import {useParams, useNavigate, Link} from "react-router-dom";
-import {handleError} from "./errorHandler";
+import {handleError} from "../../../errorHandler";
 import './AddEditActivityPage.css';
 const EditActivityPage = () => {
     const { activityId } = useParams();
@@ -75,7 +75,8 @@ const EditActivityPage = () => {
     };
 
 
-    const handleSave = async () => {
+    const handleSave = async (e) => {
+        e.preventDefault();
         try {
             const updatedLocations = locations.map(({ tempId, ...rest }) => rest); // Удаляем tempId
             const updatedActivity = { ...activity, languages: selectedLanguages, locations: updatedLocations };

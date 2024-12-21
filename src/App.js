@@ -4,10 +4,10 @@ import Registration from './Registration'; // ваш компонент реги
 import LoginForm from './LoginForm';
 import AddEventPage from "./AddEventPage";
 import EventsPage from "./EventsPage";
-import ActivitiesPage from "./ActivitiesPage";
-import AddActivityPage from "./AddActivityPage";
+import ActivitiesPage from "./Activity/activities-layout/ActivitiesPage";
+import AddActivityPage from "./Activity/activities-layout/add-edit-activity-layout/AddActivityPage";
 import EditEventPage from "./EditEventPage";
-import EditActivityPage from "./EditActivityPage";
+import EditActivityPage from "./Activity/activities-layout/add-edit-activity-layout/EditActivityPage";
 import EditUserProfilePage from "./EditUserProfile";
 import UserRequestsPage from "./UserRequestsPage";
 import AdminRequestsPage from "./AdminRequestsPage";
