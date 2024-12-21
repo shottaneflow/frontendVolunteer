@@ -151,7 +151,7 @@ const EditActivityPage = () => {
                                 onChange={handleInputChange}
                                 required
                                 min="1"
-                                max="1000"          
+                                max="250"          
                             />
                         </div>
                     </div>

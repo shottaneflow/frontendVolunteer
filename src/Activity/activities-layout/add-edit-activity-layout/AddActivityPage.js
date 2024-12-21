@@ -135,7 +135,7 @@ const AddActivityPage = () => {
                             value={formData.requiredVolunteers}
                             onChange={handleChange}
                             min="1"
-                            max="1000"
+                            max="250"
                             required
                         />
                     </div>

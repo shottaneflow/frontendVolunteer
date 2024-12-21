@@ -2,11 +2,11 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Routes,Navigate } from 'react-router-dom';
 import Registration from './Registration'; // ваш компонент регистрации
 import LoginForm from './LoginForm';
-import AddEventPage from "./AddEventPage";
-import EventsPage from "./EventsPage";
+import AddEventPage from "./Event/event-add-edit-layout/AddEventPage";
+import EventsPage from "./Event/events-layout/EventsPage";
 import ActivitiesPage from "./Activity/activities-layout/ActivitiesPage";
 import AddActivityPage from "./Activity/activities-layout/add-edit-activity-layout/AddActivityPage";
-import EditEventPage from "./EditEventPage";
+import EditEventPage from "./Event/event-add-edit-layout/EditEventPage";
 import EditActivityPage from "./Activity/activities-layout/add-edit-activity-layout/EditActivityPage";
 import EditUserProfilePage from "./EditUserProfile";
 import UserRequestsPage from "./UserRequestsPage";

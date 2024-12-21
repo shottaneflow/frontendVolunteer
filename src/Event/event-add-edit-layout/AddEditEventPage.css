@@ -1,0 +1,100 @@
+.drop-down{
+    padding: 10px 10px;
+    display: grid;
+    grid-template-columns: repeat(2, auto);
+    position: absolute;
+    top: 23px;
+    width: 92%;
+    box-shadow: 1px 1px 1px black;
+    box-shadow: -1px -1px 1px black;
+    background-color: rgb(249,249,251);
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(-5px);
+    visibility: hidden;
+}
+.drop-down.active{
+    transform: translateY(0);
+    opacity: 1;
+    visibility: visible;
+}
+.addform{
+    display:grid;
+    grid-template-columns: 120px auto;
+    margin: 0px auto;
+    gap: 5px;
+}
+.first_column{
+    white-space: nowrap;
+    font-size: 18px;
+    max-width: 100px;
+}
+.second_column{
+    text-align: center;
+    position: relative;
+    top: 5px;
+    border-radius: 5px;
+    height: 15px;
+}
+.add-event-button{
+    margin: 0px 0px 0px 10px;
+    padding: 0px;
+    font-size: 16px;
+    border:none;
+    background-color: white;
+}
+.add-event-button:hover{
+    color:rgb(153, 150, 143);
+}
+.req-vol{
+    width: 98%;;
+    text-align: center;
+    height: 15px;
+    padding: 0px;
+    border-radius: 5px;
+    margin-top: 5px;
+}
+.over{
+    border-color: red;
+}
+.event-add-link{
+    font-size: 10px;
+    text-decoration: none;
+    color: blue;
+}
+.event-add-link:hover{
+    color:rgb(153, 150, 143);
+}
+
+.delete-event-button{
+    padding: 0px;
+    font-size: 16px;
+    margin-top: 10px;
+    border:none;
+    background-color: white;
+    align-self: self-start;
+    margin-left: 10px;
+}
+.delete-event-button:hover{
+    color:rgb(153, 150, 143);
+}
+.delete-to-activity{
+    align-self: self-start;
+    background-color: white;
+    border: none;
+    padding: 0px;
+    font-size: 16px;
+    margin-left: 20px;
+    
+}
+.delete-to-activity:hover{
+    color:rgb(153, 150, 143);
+}
+.event-link{
+    font-size: 10px;
+    text-decoration: none;
+    color: blue;
+}
+.event-link:hover{
+    color:rgb(153, 150, 143);
+}
