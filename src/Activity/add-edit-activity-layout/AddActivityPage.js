@@ -10,7 +10,7 @@ const AddActivityPage = () => {
     const [formData, setFormData] = useState({
         name: "",
         startDate: "",
-        requiredVolunteers: null,
+        requiredVolunteers: "",
         registeredVolunteers: 0,
         languages: [], // выбранные языки
         locations: [] // указанные локации
@@ -111,13 +111,13 @@ const AddActivityPage = () => {
                     <label style={{fontSize:"18px"}}>Языки:</label>
                     <div style={{display:"flex",flexDirection:"row"}}>
                     {languages.map((language) => (
-                        <div>
-                            <input 
+                        <div key={language.id}>
+                            <input
                                 className="check-box"
                                 type="checkbox"
                                 onChange={() => handleLanguageToggle(language)}
                             />
-                            <label style={{fontSize:"14px"}} key={language.id}>
+                            <label style={{fontSize:"14px"}}>
                                 {language.name}
                             </label>
                         </div>

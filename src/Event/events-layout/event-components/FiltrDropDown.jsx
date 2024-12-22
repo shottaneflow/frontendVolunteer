@@ -19,7 +19,7 @@ function FiltrDropDown({filtr_list,isOpen,change,setIsOpen}){
                 {
                     filtr_list.map((filtr)=>{
                         return(
-                            <div className="filtr_item"><input style={{margin: "0px 5px 0px 0px"}} type="checkBox" value={filtr.name} key={filtr.id} onChange={handleChanges}/><label>{filtr.name}</label></div>
+                            <div className="filtr_item" key={filtr.id}><input style={{margin: "0px 5px 0px 0px"}} type="checkBox" value={filtr.name} key={filtr.id} onChange={handleChanges}/><label>{filtr.name}</label></div>
                         )
                     })
                 }

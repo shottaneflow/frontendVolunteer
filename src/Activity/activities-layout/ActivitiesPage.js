@@ -164,7 +164,7 @@ const ActivitiesPage = () => {
                                 {
                                     languages.map((language)=>{
                                         return(
-                                            <div className="filtr_item"><input style={{margin: "0px 5px 0px 0px"}} type="checkBox" key={language.id} onChange={()=>toggleLanguage(language.id)}/><label>{language.name}</label></div>
+                                            <div key={language.id} className="filtr_item"><input style={{margin: "0px 5px 0px 0px"}} type="checkBox" key={language.id} onChange={()=>toggleLanguage(language.id)}/><label>{language.name}</label></div>
                                         )
                                     })
                                 }
@@ -173,7 +173,7 @@ const ActivitiesPage = () => {
                         </div>
                 </div>
                 <select value={sort} onChange={handleSortOrder} className="change_s">
-                    <option value={`${sort}`} selected disabled hidden>cортировка по времени: {sort}</option>
+                    <option value={`${sort}`} disabled hidden>cортировка по времени: {sort}</option>
                     <option>cортировка по времени: {sort!="убывание" ? "убывание" : "возрастание"}</option>
                 </select>
             </div>
@@ -193,11 +193,7 @@ const ActivitiesPage = () => {
                 <tbody>
                 {getFilteredActivities().map((activity,index) => {
                         return(
-                            <>
-                            {activity.length < 1 && (
-                                <tr><th><a>Мероприятий c таким типом нет</a></th></tr>
-                            )}
-                            <tr style={{borderTop:"2px solid black"}}>
+                            <tr style={{borderTop:"2px solid black"}} key={activity.id}>
                                 <th style={{verticalAlign:"top"}} className="event-name-column">
                                     <a style={{fontSize:"19px"}}>
                                         Мероприятие №{index+1}
@@ -209,7 +205,7 @@ const ActivitiesPage = () => {
                                     </div>
                                 </th>
                                 <th style={{verticalAlign:"top"}}>
-                                    <div className="event-table-second-line" style={{marginTop:"20px"}}>
+                                    <div className="event-table-second-line" style={{marginTop:"23px"}}>
                                         <a>
                                             {activity.registeredVolunteers === null ? "0": activity.registeredVolunteers}/{activity.requiredVolunteers}
                                         </a>
@@ -273,9 +269,6 @@ const ActivitiesPage = () => {
                                     </th>
                                 )}
                             </tr>
-                            <tr style={{height:"10px"}}>
-                            </tr>
-                            </>
                         )
                     })
                 }

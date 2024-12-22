@@ -15,7 +15,7 @@ const AddEventPage = () => {
             id: "",
             name:"",
         },
-        requiredVolunteers: null,
+        requiredVolunteers: "",
         status: ""
     });
     const navigate = useNavigate();
@@ -143,7 +143,7 @@ const AddEventPage = () => {
                         style={{borderRadius:"10px",textAlign:'center'}}
                         required
                     >
-                        <option value="" selected hidden></option>
+                        <option value="" hidden></option>
                         <option value="" disabled>Выберите тип</option>
                         {filtr_list_type.map(list=>{
                                 return(
@@ -160,7 +160,7 @@ const AddEventPage = () => {
                         required
                         style={{borderRadius:"10px",textAlign:'center'}}
                     >
-                        <option value="" selected hidden></option>
+                        <option value="" hidden></option>
                         <option value="" disabled>Выберите статус</option>
                         {filtr_list_status.map(list=>{
                             return(
@@ -198,7 +198,7 @@ const AddEventPage = () => {
                             )}  
                         </div>
                     </div>
-                <button className="add-event-button" type="submit" disabled={!(more==false && no_numb == false && less ==false)? "disabled":""}>добавить событие</button>
+                <button className="add-event-button" type="submit" disabled={!(more==false && no_numb == false && less ==false)? "disabled":""}>Добавить событие</button>
             </form>
         </div>
     );

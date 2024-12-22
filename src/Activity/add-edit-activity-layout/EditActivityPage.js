@@ -125,14 +125,14 @@ const EditActivityPage = () => {
                     <label style={{fontSize:"18px"}}>Языки:</label>
                     <div style={{display:"flex",flexDirection:"row"}}>
                     {languages.map((language) => (
-                        <div>
+                        <div key={language.id}>
                             <input
                                 className="check-box"
                                 type="checkbox"
                                 checked={selectedLanguages.some((lang) => lang.id === language.id)}
                                 onChange={() => handleLanguageToggle(language)}
                             />
-                            <label style={{fontSize:"14px"}} key={language.id}>
+                            <label style={{fontSize:"14px"}}>
                                 {language.name}
                             </label>
                         </div>
