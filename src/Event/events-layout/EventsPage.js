@@ -175,8 +175,8 @@ const EventsPage = () => {
                                 <FiltrDropDown filtr_list = {filtr_list_type} isOpen={isOpenType} change={handleTypeFilterChange} setIsOpen={setOpenType} />
                             </div>
                         </div>
-                        <select value={sort} onChange={handleSortOrder} className="change_s event-list-link">
-                            <option value={`${sort}`} selected disabled hidden>cортировка по времени: {sort}</option>
+                        <select value={sort} onChange={handleSortOrder} className="change_s">
+                            <option value={`${sort}`} disabled hidden>cортировка по времени: {sort}</option>
                             <option>cортировка по времени: {sort!="убывание" ? "убывание" : "возрастание"}</option>
                         </select>
                 </div>
@@ -194,14 +194,12 @@ const EventsPage = () => {
                 )}
             <table className="event-table">
                 <tbody>
-                {getSortedEvents().map((event) => {
-                                                    
+                {getSortedEvents().map((event,index) => {                                
                         return(
-                            <>
-                            <tr style={{borderTop:"2px solid black"}}>
+                            <tr key={event.id}>
                                 <th style={{verticalAlign:"top"}} className="event-name-column">
                                     <a style={{fontSize:"19px"}} onClick={()=>handleOpenActivities(event.id)} >
-                                        Событие №{event.id}
+                                        Событие №{index+1}
                                     </a>
                                     <div className="event-table-second-line event-name">
                                         <a onClick={()=>handleOpenActivities(event.id)}>
@@ -210,7 +208,7 @@ const EventsPage = () => {
                                     </div>
                                 </th>
                                 <th style={{verticalAlign:"top"}}>
-                                    <div className="event-table-second-line" style={{marginTop:"20px"}}>
+                                    <div className="event-table-second-line" style={{marginTop:"22px"}}>
                                         <a>
                                             {event.registeredVolunteers === null ? "0": event.registeredVolunteers}/{event.requiredVolunteers}
                                         </a>
@@ -250,9 +248,6 @@ const EventsPage = () => {
                                 </th>
                                 )}   
                             </tr>
-                            <tr style={{height:"10px"}}>
-                            </tr>
-                            </>
                         )
                     })
                 }

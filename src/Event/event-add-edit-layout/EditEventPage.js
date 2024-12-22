@@ -211,10 +211,10 @@ const EditEventPage = () => {
                             </div>
                         </div>
                     <div style={{display:"flex",flexDirection:"column"}}>
-                        <button type="submit" className="delete-event-button" disabled={!(more==false && no_numb == false && less ==false)? "disabled":""}>редактировать событие</button>
+                        <button type="submit" className="delete-event-button" disabled={!(more==false && no_numb == false && less ==false)? "disabled":""}>Редактировать событие</button>
                     </div>
                 </form>
-                <button className="delete-to-activity" onClick={() => navigate(`/events/${id}/activities`)}>список мероприятий</button>
+                <button className="delete-to-activity" onClick={() => navigate(`/events/${id}/activities`)}>Список мероприятий</button>
             </div>
     );
 };
