@@ -3,15 +3,32 @@ import apiClient from "../../apiClient";
 import {useParams, useNavigate, Link} from "react-router-dom";
 import {handleError} from "../../errorHandler";
 import './AddEditActivityPage.css';
+
 const EditActivityPage = () => {
     const { activityId } = useParams();
     const { eventId } = useParams();
     const [activity, setActivity] = useState(null);
+    const [activities, setActivities] = useState(null);
     const [languages, setLanguages] = useState([]); // Все языки из БД
     const [selectedLanguages, setSelectedLanguages] = useState([]); // Выбранные языки
     const [locations, setLocations] = useState([]);
     const [newLocation, setNewLocation] = useState("");
+    const [maxreq,setMaxReq] = useState(1);
+    const [required,setRequired] = useState(0);
     const navigate = useNavigate();
+    const [bol,setBol] = useState(false);
+
+    const countRequiredVol=()=>{
+        let req = required;
+        let v = 0;
+        if(activities!=null){
+            activities.map((activity) =>{
+                v += activity.requiredVolunteers
+            })
+            v = req - v;
+        }
+        setMaxReq(v);
+    }
 
     useEffect(() => {
         // Загрузка мероприятия
@@ -25,7 +42,15 @@ const EditActivityPage = () => {
                 handleError(error, navigate);
             }
         };
-
+        const fetchActivities = async () => {
+            try {
+                const response = await apiClient.get(`http://localhost:8081/events-api/${eventId}/activities`);
+                setActivities(response.data);
+                setBol(true);
+            } catch (error) {
+                handleError(error, navigate);
+            }
+        };
         // Загрузка всех языков
         const fetchLanguages = async () => {
             try {
@@ -35,10 +60,22 @@ const EditActivityPage = () => {
                 handleError(error, navigate);
             }
         };
-
+        const fetchEvent = async () => {
+            try {
+                const response = await apiClient.get(`http://localhost:8081/admin/events-api/events/${eventId}`);
+                setRequired(response.data.requiredVolunteers);
+            } catch (error) {
+                handleError(error, navigate);
+            }
+        };
+        fetchEvent();
         fetchActivity();
+        fetchActivities();
         fetchLanguages();
-    }, [activityId]);
+        countRequiredVol();
+    }, [activityId,bol]);
+    
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -151,7 +188,7 @@ const EditActivityPage = () => {
                                 onChange={handleInputChange}
                                 required
                                 min="1"
-                                max="250"          
+                                max={maxreq}          
                             />
                         </div>
                     </div>

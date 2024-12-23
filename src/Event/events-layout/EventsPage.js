@@ -1,11 +1,14 @@
-import React, { cloneElement, useEffect, useState,useRef } from "react";
+import React, { cloneElement, useEffect, useState,useRef, use } from "react";
 import apiClient from "../../apiClient";
 import { useNavigate } from "react-router-dom";
 import { handleError } from "../../errorHandler";
 import FiltrDropDown from "./event-components/FiltrDropDown"
 import './EventsPage.css'
+import { useSelector} from "react-redux";
 
 const EventsPage = () => {
+    const filtr_list_status = useSelector(state => state.filtr_list_status);
+    const filtr_list_type = useSelector(state=>state.filtr_list_type);
     const [events, setEvents] = useState([]);
     const [selectedTypes, setSelectedTypes] = useState([]); // Фильтрация по типу
     const [selectedStatuses, setSelectedStatuses] = useState([]); // Фильтрация по статусу
@@ -83,8 +86,9 @@ const EventsPage = () => {
         navigate("/add-event");
     };
 
-    const handleOpenActivities = (eventId) => {
+    const handleOpenActivities = (eventId,name) => {
         navigate(`/events/${eventId}/activities`);
+        sessionStorage.setItem("name", name);
     };
 
     const handleDeleteEvent = async (id) => {
@@ -108,38 +112,6 @@ const EventsPage = () => {
             prev.includes(value) ? prev.filter(status => status !== value) : [...prev, value]
         );
     };
-    const filtr_list_status = [
-        {
-            id: "1",
-            name: "Не началось",
-        },
-        {
-            id: "2",
-            name: "Завершилось",
-        },
-        {
-            id: "3",
-            name: "В РАЗГАРЕ!",
-        },
-    ]
-    const filtr_list_type = [
-        {
-            id: "1",
-            name: "Районный",
-        },
-        {
-            id: "2",
-            name: "Городской",
-        },
-        {
-            id: "3",
-            name: "Всероссийский",
-        },
-        {
-            id: "4",
-            name: "Международный",
-        },
-    ]
 
     return (
         <div className="mainstyle">
@@ -198,7 +170,7 @@ const EventsPage = () => {
                         return(
                             <tr key={event.id}>
                                 <th style={{verticalAlign:"top"}} className="event-name-column">
-                                    <a style={{fontSize:"19px"}} onClick={()=>handleOpenActivities(event.id)} >
+                                    <a style={{fontSize:"19px"}} onClick={()=>handleOpenActivities(event.id,event.name)} >
                                         Событие №{index+1}
                                     </a>
                                     <div className="event-table-second-line event-name">

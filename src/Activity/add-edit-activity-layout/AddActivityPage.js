@@ -4,6 +4,7 @@ import {useParams, useNavigate, Link} from "react-router-dom";
 import {handleError} from "../../errorHandler";
 import "./AddEditActivityPage.css";
 
+
 const AddActivityPage = () => {
     const { id: eventId } = useParams();
     const navigate = useNavigate();
@@ -15,8 +16,25 @@ const AddActivityPage = () => {
         languages: [], // выбранные языки
         locations: [] // указанные локации
     });
+    const [maxreq,setMaxReq] = useState(0);
+    const [required,setRequired] = useState(0);
     const [languages, setLanguages] = useState([]);
     const [newLocation, setNewLocation] = useState("");
+    const [activities,setActivities] = useState(null);
+    const [bol,setBol] = useState(false);
+
+
+    const countRequiredVol=()=>{
+        let req = required;
+        let v = 0;
+        if(activities!=null){
+            activities.map((activity) =>{
+                v += activity.requiredVolunteers
+            })
+            v = req - v;
+        }
+        setMaxReq(v);
+    }
 
     useEffect(() => {
         const fetchLanguages = async () => {
@@ -27,8 +45,28 @@ const AddActivityPage = () => {
                 handleError(error, navigate);
             }
         };
+        const fetchActivities = async () => {
+            try {
+                const response = await apiClient.get(`http://localhost:8081/events-api/${eventId}/activities`);
+                setActivities(response.data);
+                setBol(true);
+            } catch (error) {
+                handleError(error, navigate);
+            }
+        };
+        const fetchEvent = async () => {
+            try {
+                const response = await apiClient.get(`http://localhost:8081/admin/events-api/events/${eventId}`);
+                setRequired(response.data.requiredVolunteers);
+            } catch (error) {
+                handleError(error, navigate);
+            }
+        };
+        fetchActivities();
+        fetchEvent();
+        countRequiredVol();
         fetchLanguages();
-    }, []);
+    }, [required,bol]);
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -135,7 +173,7 @@ const AddActivityPage = () => {
                             value={formData.requiredVolunteers}
                             onChange={handleChange}
                             min="1"
-                            max="250"
+                            max={maxreq}
                             required
                         />
                     </div>
