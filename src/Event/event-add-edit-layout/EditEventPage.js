@@ -3,18 +3,17 @@ import { useParams, useNavigate, Link } from "react-router-dom";
 import apiClient from "../../apiClient";
 import { handleError } from "../../errorHandler";
 import './AddEditEventPage.css';
+import { useSelector } from "react-redux";
 
 const EditEventPage = () => {
+    const filtr_list_status = useSelector(state => state.filtr_list_status);
+    const filtr_list_type = useSelector(state=>state.filtr_list_type);
     const { id } = useParams();
     const navigate = useNavigate();
     const [event, setEvent] = useState(null);
     const [no_numb,setNoNumb] = useState(false);
     const [more,setMore] = useState(false);
     const [less,setLess] = useState(false);
-
-    // Списки для типов и статусов событий
-    const eventTypes = ["Культурное", "Спортивное", "Социальное"];
-    const eventStatuses = ["Международный", "Районный", "Городской", "Всероссийский"];
 
     useEffect(() => {
         const fetchEvent = async () => {
@@ -79,39 +78,6 @@ const EditEventPage = () => {
     if (!event) {
         return <p>Загрузка...</p>;
     }
-    const filtr_list_status = [
-        {
-            id: "1",
-            name: "Не началось",
-        },
-        {
-            id: "2",
-            name: "Завершилось",
-        },
-        {
-            id: "3",
-            name: "В РАЗГАРЕ!",
-        },
-    ]
-    const filtr_list_type = [
-        {
-            id: "1",
-            name: "Районный",
-        },
-        {
-            id: "2",
-            name: "Городской",
-        },
-        {
-            id: "3",
-            name: "Всероссийский",
-        },
-        {
-            id: "4",
-            name: "Международный",
-        },
-    ]
-
     return (
         <div style={{ maxWidth: "400px", margin: "130px auto", textAlign: "left", display:"flex",flexDirection:"column" }}>
             <div style={{display:"flex", flexDirection:"column", fontSize:"10px",marginLeft:"10px"}}>

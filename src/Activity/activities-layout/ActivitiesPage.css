@@ -1,15 +1,3 @@
-
-.act-ul{
-    text-align: start;
-    margin-top: 0px;
-}
-.act-list-link{
-    text-decoration: none;
-    color:black;
-}
-.act-list-link:hover{
-    color:rgb(153, 150, 143);
-}
 .act-main-style{
 
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
@@ -17,18 +5,7 @@
     max-width: 900px;
     margin: 89px auto;
 }
-.act-button{
-    width: 126px;
-}
-.act-dropdown{
-    width: 100%;
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items:center              ;
-}
-
-.header{
+.act-header{
     display: flex;
     flex-direction: row;
     max-width: 900px;
@@ -36,20 +13,31 @@
     gap: 20px;
     margin: 0px auto;
 }
-.mainstyle{
-
-    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
-    width: 100%;
-    max-width: 900px;
-    margin: 70px auto;
+.act-ul{
+    text-align: start;
+    margin-top: 0px;
 }
-.about{
+.act-list-link{
+    text-decoration: none;
+    color: rgb(0, 0, 0);
+}
+.act-list-link:hover{
+    color:rgb(153, 150, 143);
+}
+.act-dropdown{
+    width: 100%;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+}
+.act-about{
     margin-top: 7px;
     width: 100%;
     display: flex;
     flex-direction: column;
 }
-.setting_list{
+.act-setting-list{
     flex-grow: 1;
     width: auto;
     display:flex;
@@ -57,18 +45,18 @@
     align-items: end;
     gap:20px;
 }
-.change_f{
+.act-change-f{
     display: flex;
     align-items: center;
     flex-direction: column;
     position: relative;
 }
-.label_f{
+.act-label-f{
     user-select: none;
     white-space: nowrap;
     max-width: 220px;
 }
-.filtr_header
+.act-filtr-header
 {
     flex-grow: 1;
     display: flex;
@@ -76,7 +64,7 @@
     justify-content: center;
     gap:20px ;
 }
-.change_s{
+.act-change-s{
     padding: 0px;
     border: none;
     font-size: 14px;
@@ -84,7 +72,7 @@
     -moz-appearance: none;
     -webkit-appearance: none;
 }
-.add{
+.act-add{
     position: relative;
     font-size: 16px;
     border: none;
@@ -92,11 +80,10 @@
     background-color: white;
     margin-top: 10px;
 }
-.add:hover{
+.act-add:hover{
     color:rgb(153, 150, 143);
 }
-
-.filtr_menu{
+.act-filtr-menu{
     display: flex;
     flex-direction: column;
     position: absolute;
@@ -109,94 +96,44 @@
     transform: translateY(-5px);
     visibility: hidden;
 }
-.filtr_menu.active{
+.act-filtr-menu.active{
     transform: translateY(0);
     opacity: 1;
     visibility: visible;
 }
-.ent_filtr{
-    border: none;
-    text-align: center;
-    background-color: #772ce8;
-    color:white;
-    width: 50%;
-    border-radius: 8px;
-}
-.filtr_list{
+.act-filtr-list{
     margin: 0px 20px;
     text-align: center;
     align-items: center;
     display: inline-flex;
     white-space: nowrap;
 }
-.filtr_item{
-    margin: 0px 10px;
-}
-
-.event-table{
+.act-table{
     overflow-wrap: break-word;
     user-select: none;
     width: 100%;
     font-size: 17px;
     padding-top: 10px;
 }
-.event-table-field{
+.act-table-field{
     display: flex;
     flex-direction: column;
 }
-
-.event-table-second-line{
+.act-table-second-line{
     font-weight: 400;
 }
-.event-button{
+.act-button{
     width: 126px;
 }
-.event-name-column{
+.act-name-column{
     max-width: 200px;
     text-align: start;
 }
-.event-name{
+.act-name{
     max-width: 200px;
     text-align: start;
 }
-.event-list-link{
-    text-decoration: none;
-    color: rgb(0, 0, 0);
-}
-.event-list-link:hover{
-    color:rgb(153, 150, 143);
-}
-
-
-
-
-
-
-
-
-.event_item{
-    display: flex;
-    flex-direction: row;
-}
-.event{
-    margin: 0px auto;
-    max-width: 1000px;
-    font-size: 18px;
-}
-.inf{
-    min-width: 120px;
-    padding-top: 5px;
-    display: grid;
-    height: calc( 100% - 30px);
-    align-items: center;
-}
-.div_button{
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-}
-.toActivity{
+.act-edit{
     height: 30px;
     border-radius: 20px;
     background-color: rgb(93, 158, 254);
@@ -206,26 +143,38 @@
     width: 100%;
     max-width: 220px;
 }
-.toActivity:hover{
+.act-edit:hover{
     background-color: white;
     color:#000000;
     border: 1px solid rgb(0, 0, 0);
 }
-.delete{
-    height: 30px;
-    width: 100%;
-    max-width: 220px;
-    border-radius: 20px;
-    background-color: rgb(93, 158, 254);
-    color:rgb(255, 255, 255);
-    border: none;
-    padding-bottom: 4px;
-}
-.delete:hover{
+.act-delete:hover{
     background-color: white;
     color:#000000;
     border: 1px groove rgb(0, 0, 0);
 }
-.flexgrow{
-    flex-grow: 1;
+.act-delete{
+    height: 30px;
+    border-radius: 20px;
+    background-color: rgb(93, 158, 254);
+    color:rgb(255, 255, 255);
+    border: none;
+    border: 3px solid white;
+    width: 100%;
+    max-width: 220px;
+}
+.act-submit-req{
+    height: 30px;
+    border-radius: 20px;
+    background-color: rgb(93, 158, 254);
+    color:rgb(255, 255, 255);
+    border: none;
+    border: 3px solid white;
+    width: 100%;
+    max-width: 220px;
+}
+.act-submit-req:hover{
+    background-color: white;
+    color:#000000;
+    border: 1px groove rgb(0, 0, 0);
 }

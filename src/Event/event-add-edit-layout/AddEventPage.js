@@ -3,8 +3,11 @@ import apiClient from "../../apiClient";
 import { Link, useNavigate } from "react-router-dom";
 import { handleError } from "../../errorHandler";
 import './AddEditEventPage.css';
+import { useSelector } from "react-redux";
 
 const AddEventPage = () => {
+    const filtr_list_status = useSelector(state => state.filtr_list_status);
+    const filtr_list_type = useSelector(state=>state.filtr_list_type);
     const [no_numb,setNoNumb] = useState(false);
     const [more,setMore] = useState(false);
     const [less,setLess] = useState(false);
@@ -66,39 +69,6 @@ const AddEventPage = () => {
         const now = new Date();
         return now.toISOString().slice(0, 16); // Формат для <input type="datetime-local">
     };
-
-    const filtr_list_status = [
-        {
-            id: "1",
-            name: "Не началось",
-        },
-        {
-            id: "2",
-            name: "Завершилось",
-        },
-        {
-            id: "3",
-            name: "В РАЗГАРЕ!",
-        },
-    ]
-    const filtr_list_type = [
-        {
-            id: "1",
-            name: "Районный",
-        },
-        {
-            id: "2",
-            name: "Городской",
-        },
-        {
-            id: "3",
-            name: "Всероссийский",
-        },
-        {
-            id: "4",
-            name: "Международный",
-        },
-    ]
 
     return (
         <div style={{ maxWidth: "400px", margin: "130px auto", textAlign: "left" }}>

@@ -144,7 +144,11 @@
 }
 .event-table-field{
     display: flex;
+    height: 100%;
     flex-direction: column;
+}
+.event-table-row{
+    border-top: 2px solid black;
 }
 
 .event-table-second-line{
@@ -154,7 +158,6 @@
     width: 126px;
 }
 .event-name-column{
-    max-width: 200px;
     text-align: start;
 }
 .event-name{

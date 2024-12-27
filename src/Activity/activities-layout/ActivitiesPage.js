@@ -18,6 +18,7 @@ const ActivitiesPage = () => {
     const [isOpenFiltr,setOpenFiltr] = useState(false);
     const [sort,setSort] = useState("убывание");
     const menuRef = useRef(null);
+    const event_name = sessionStorage.getItem("name");
     
     useClickOutside(menuRef,()=>{
         if(isOpenFiltr)setTimeout(()=>setOpenFiltr(false),80);
@@ -139,8 +140,8 @@ const ActivitiesPage = () => {
 
     return (
         <div className="act-main-style">
-            <div className="header">
-            <div className="about label_f">
+            <div className="act-header">
+            <div className="act-about act-label-f">
                 <Link to="/events" className="act-list-link">
                     На главную
                 </Link>
@@ -155,16 +156,16 @@ const ActivitiesPage = () => {
                     </a>
                 )}
             </div>
-            <div className="setting_list">
-                <div className="filtr_header">
+            <div className="act-setting-list">
+                <div className="act-filtr-header">
                     <div className="act-dropdown">
-                        <label className="label_f" onClick={()=>{setOpenFiltr(!isOpenFiltr);}}>фильтровать по языкам</label>
-                            <nav className={`filtr_menu ${isOpenFiltr ? "active" : ""}`} ref={menuRef}>
-                            <div className="filtr_list">
+                        <label className="act-label-f act-list-link" onClick={()=>{setOpenFiltr(!isOpenFiltr);}}>фильтровать по языкам</label>
+                            <nav className={`act-filtr-menu ${isOpenFiltr ? "active" : ""}`} ref={menuRef}>
+                            <div className="act-filtr-list">
                                 {
                                     languages.map((language)=>{
                                         return(
-                                            <div key={language.id} className="filtr_item"><input style={{margin: "0px 5px 0px 0px"}} type="checkBox" key={language.id} onChange={()=>toggleLanguage(language.id)}/><label>{language.name}</label></div>
+                                            <div key={language.id} style={{margin:"0x 10px"}}><input style={{margin: "0px 5px 0px 0px"}} type="checkBox" key={language.id} onChange={()=>toggleLanguage(language.id)}/><label>{language.name}</label></div>
                                         )
                                     })
                                 }
@@ -172,13 +173,13 @@ const ActivitiesPage = () => {
                             </nav>
                         </div>
                 </div>
-                <select value={sort} onChange={handleSortOrder} className="change_s">
+                <select value={sort} onChange={handleSortOrder} className="act-change-s">
                     <option value={`${sort}`} disabled hidden>cортировка по времени: {sort}</option>
                     <option>cортировка по времени: {sort!="убывание" ? "убывание" : "возрастание"}</option>
                 </select>
             </div>
         </div>
-        <h2 style={{height:"30px",marginTop:"15px", marginBottom:"0px",marginLeft:"1px"}}>Мероприятия для события: {eventId}</h2>
+        <h2 style={{marginTop:"15px", marginBottom:"0px",marginLeft:"1px"}}>Мероприятия для события: "{event_name}"</h2>
                 {(getFilteredActivities().length < 1 && selectedLanguages.length == 0) && (
                     <div style={{borderTop:"1px solid black",display:"flex", borderBottom:"1px solid black",height:"200px",alignItems:"center",justifyContent:"center"}}>
                         <a>Мероприятий нет</a>
@@ -189,23 +190,23 @@ const ActivitiesPage = () => {
                         <a>Мероприятий с выбранными фильтрами нет</a>
                     </div>
                 )}
-            <table className="event-table">
+            <table className="act-table">
                 <tbody>
                 {getFilteredActivities().map((activity,index) => {
                         return(
                             <tr style={{borderTop:"2px solid black"}} key={activity.id}>
-                                <th style={{verticalAlign:"top"}} className="event-name-column">
+                                <th style={{verticalAlign:"top"}} className="act-name-column">
                                     <a style={{fontSize:"19px"}}>
                                         Мероприятие №{index+1}
                                     </a>    
-                                    <div className="event-table-second-line event-name">
+                                    <div className="act-table-second-line act-name">
                                         <a>
                                             {activity.name}
                                         </a>
                                     </div>
                                 </th>
                                 <th style={{verticalAlign:"top"}}>
-                                    <div className="event-table-second-line" style={{marginTop:"23px"}}>
+                                    <div className="act-table-second-line" style={{marginTop:"23px"}}>
                                         <a>
                                             {activity.registeredVolunteers === null ? "0": activity.registeredVolunteers}/{activity.requiredVolunteers}
                                         </a>
@@ -215,7 +216,7 @@ const ActivitiesPage = () => {
                                     <a style={{fontSize:"18px"}}>
                                         Дата
                                     </a>
-                                    <div className="event-table-second-line">
+                                    <div className="act-table-second-line">
                                         {new Date(activity.startDate).toLocaleString('default', {day:'numeric', month:"2-digit",year:'numeric', hour: '2-digit', minute: '2-digit' })}
                                     </div>
                                 </th>
@@ -223,7 +224,7 @@ const ActivitiesPage = () => {
                                     <a style={{fontSize:"18px"}}>
                                         Языки
                                     </a>
-                                    <div className="event-table-second-line">
+                                    <div className="act-table-second-line">
                                         <a>
                                             {activity.languages && activity.languages.length > 0 ? (
                                                 <ul className="act-ul">
@@ -238,11 +239,11 @@ const ActivitiesPage = () => {
                                     </div>
                                 </th>
                                 <th style={{verticalAlign:"top"}}>
-                                    <div className="event-table-field">
+                                    <div className="act-table-field">
                                         <a style={{fontSize:"18px"}}>
                                             Локации
                                         </a>
-                                        <div className="event-table-second-line">
+                                        <div className="act-table-second-line">
                                             <a>
                                                 {activity.locations && activity.locations.length > 0 ? (
                                                     <ul className="act-ul">
@@ -261,10 +262,10 @@ const ActivitiesPage = () => {
                                     <th className="act-button" style={{verticalAlign:"top"}}>
                                         <div>
                                         {isUser && activity.registeredVolunteers < activity.requiredVolunteers && !hasUserSubmittedRequest(activity.id) && (
-                                            <button className="delete" onClick={() => handleSubmitRequest(activity.id)}>Подать заявку</button>
+                                            <button className="act-submit-req" onClick={() => handleSubmitRequest(activity.id)}>Подать заявку</button>
                                         )}
-                                        {isAdmin && (<button className="toActivity"onClick={() => handleEditActivity(activity.id)}>Редактировать</button>)}
-                                        {isAdmin && (<button className="delete" onClick={() => handleDeleteActivity(activity.id)}>Удалить</button>)}
+                                        {isAdmin && (<button className="act-edit"onClick={() => handleEditActivity(activity.id)}>Редактировать</button>)}
+                                        {isAdmin && (<button className="act-delete" onClick={() => handleDeleteActivity(activity.id)}>Удалить</button>)}
                                         </div>
                                     </th>
                                 )}
@@ -275,8 +276,8 @@ const ActivitiesPage = () => {
                 </tbody>
             </table>
             {isAdmin && (
-                <div className="header">
-                    <button onClick={handleAddActivity} className="add">Добавить мероприятие</button>
+                <div className="act-header">
+                    <button onClick={handleAddActivity} className="act-add">Добавить мероприятие</button>
                 </div>
             )}
         </div>
