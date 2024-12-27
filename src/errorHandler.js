@@ -6,6 +6,9 @@ export const handleError = (error, navigate) => {
 
         // Обработка различных статусов HTTP
         switch (status) {
+            case 400:
+                alert(`${data}`);
+                break;
             case 404:
                 navigate("/404");
                 break;
