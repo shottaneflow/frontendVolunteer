@@ -46,7 +46,10 @@ const EditActivityPage = () => {
         const fetchActivities = async () => {
             try {
                 const response = await apiClient.get(`http://localhost:8081/events-api/${eventId}/activities`);
-                setActivities(response.data);
+                setActivities(response.data.filter((activity)=>{
+                    return activity.id != activityId
+                }
+                ));
                 setBol(true);
             } catch (error) {
                 handleError(error, navigate);
@@ -121,14 +124,19 @@ const EditActivityPage = () => {
     const handleSave = async (e) => {
         e.preventDefault();
         if(locations.length > 0){
-            try {
-                const updatedLocations = locations.map(({ tempId, ...rest }) => rest); // Удаляем tempId
-                const updatedActivity = { ...activity, languages: selectedLanguages, locations: updatedLocations };
-                await apiClient.post(`http://localhost:8081/admin/events-api/${eventId}/edit-activity/${activityId}`, updatedActivity);
-                navigate(`/events/${eventId}/activities`);
-            } catch (error) {
-                handleError(error, navigate);
+            if(!activities.some((activities)=>{
+                return activities.name === activity.name
+            })){
+                try {
+                    const updatedLocations = locations.map(({ tempId, ...rest }) => rest); // Удаляем tempId
+                    const updatedActivity = { ...activity, languages: selectedLanguages, locations: updatedLocations };
+                    await apiClient.post(`http://localhost:8081/admin/events-api/${eventId}/edit-activity/${activityId}`, updatedActivity);
+                    navigate(`/events/${eventId}/activities`);
+                } catch (error) {
+                    handleError(error, navigate);
+                }
             }
+            else alert(`Локация с именем "${activity.name}" уже существует`);
         }
         else alert("Введите локации для мероприятия");
     };

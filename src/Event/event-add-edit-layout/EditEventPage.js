@@ -10,6 +10,7 @@ const EditEventPage = () => {
     const filtr_list_type = useSelector(state=>state.filtr_list_type);
     const { id } = useParams();
     const navigate = useNavigate();
+    const [events,setEvents] = useState([]);
     const [event, setEvent] = useState(null);
     const [no_numb,setNoNumb] = useState(false);
     const [more,setMore] = useState(false);
@@ -24,7 +25,16 @@ const EditEventPage = () => {
                 handleError(error, navigate);
             }
         };
-
+        const fetchEvents = async ()=>{
+            try{
+                const response =await apiClient.get(`http://localhost:8081/admin/events-api/all-events`);
+                setEvents(response.data);
+            }
+            catch(error){
+                handleError(error,navigate);
+            }
+        }
+        fetchEvents();
         fetchEvent();
     }, [id]);
 
@@ -62,12 +72,17 @@ const EditEventPage = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
-        try {
-            await apiClient.post(`http://localhost:8081/admin/events-api/${id}/edit-event`, event);
-            navigate("/events");
-        } catch (error) {
-            handleError(error, navigate);
+        if(!events
+        .filter((ev)=>{return ev.id != id})
+        .some((ev)=>{return ev.name === event.name})){
+            try {
+                await apiClient.post(`http://localhost:8081/admin/events-api/${id}/edit-event`, event);
+                navigate("/events");
+            } catch (error) {
+                handleError(error, navigate);
+            }
         }
+        else alert(`Событие с именем "${event.name}" уже существует`);
     };
 
     const getMinDateTime = () => {
