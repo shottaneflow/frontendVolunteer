@@ -1,6 +1,10 @@
 .about-developers{
-    width: 500px;
+    width: 370px;
     margin: 60px auto;
+    font-size: 18px;
+    padding: 10px 20px 20px 20px;
+    border: 2px solid black;
+    border-radius: 20px;
 }
 .without-margin{
     margin: 7px 0px
@@ -8,7 +12,7 @@
 .dev-link{
     text-decoration: none;
     color: blue;
-    font-size: 10px;
+    font-size: 18px;
 }
 .dev-link:hover{
     color:rgb(153, 150, 143);   

@@ -6,7 +6,7 @@ const DeveloperPage = () => {
     return (
         <div className="about-developers">
             <Link to="/events" className="dev-link">
-                на главную
+                На главную
             </Link>
             <h3 style={{marginTop: "0px"}} className="without-margin">
                 Сведения о разработчиках

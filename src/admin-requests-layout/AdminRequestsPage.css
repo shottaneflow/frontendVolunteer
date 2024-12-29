@@ -5,11 +5,11 @@
 }
 .requests-link{
     text-decoration: none;
-    color:rgb(153, 150, 143);
-    font-size: 14px;
+    color:blue;
+    font-size: 15px;
 }
 .requests-link:hover{
-    color: rgb(93, 158, 254);
+    color:rgb(153, 150, 143);
     
 }
 .row{

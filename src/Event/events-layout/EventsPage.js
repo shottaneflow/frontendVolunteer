@@ -120,7 +120,7 @@ const EventsPage = () => {
             <div className="header">
                 <div style={{position:"relative",maxWidth:"220px"}}>
                     <div className="about label_f">
-                        <a className="event-list-link" href="/about-system"> Сведения о системе</a>
+                        <a className="event-list-link" href="/about-system" target="_blank" rel="noopener noreferrer"> Сведения о системе</a>
                         <a className="event-list-link" href="/about-developers">Сведения о разработчиках</a>
                         <div>
                             {isUser && (

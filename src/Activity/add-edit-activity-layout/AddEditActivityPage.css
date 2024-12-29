@@ -1,3 +1,7 @@
+.act-add-change-form{
+    max-width: 500px ;
+    margin: 130px auto;
+}
 .act-second-column{
     text-align: center;
     margin-top: 6px ;
@@ -24,7 +28,7 @@
     color:rgb(153, 150, 143);
 }
 .act-link{
-    font-size: 10px;
+    font-size: 17px;
     text-decoration: none;
     color: blue;
 }
@@ -32,6 +36,7 @@
     color:rgb(153, 150, 143);
 }
 .act-add-location{
+    font-size: 17px;
     width:51%;
     border: none;
     background-color:white;
@@ -41,6 +46,12 @@
 }
 .act-add-location:hover{
     color:rgb(153, 150, 143);
+}
+.act-location{
+    position: absolute;
+    font-size: 11px;
+    color: red;
+    top: 25px;
 }
 .location-form{
     margin:15px 0px;

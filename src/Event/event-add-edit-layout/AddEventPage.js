@@ -71,12 +71,12 @@ const AddEventPage = () => {
     };
 
     return (
-        <div style={{ maxWidth: "400px", margin: "130px auto", textAlign: "left" }}>
+        <div className="event-add-change-form">
             <div style={{display:"flex", flexDirection:"column"}}>
-            <Link to="/requests" className="event-add-link" style={{marginLeft:"20px"}}>
+            <Link to="/requests" className="event-link" style={{marginLeft:"20px"}}>
              просмотр заявок
             </Link>
-            <Link to="/events" className="event-add-link"style={{marginLeft:"10px"}}>
+            <Link to="/events" className="event-link"style={{marginLeft:"10px"}}>
              на главную
             </Link>
             </div>
@@ -158,7 +158,7 @@ const AddEventPage = () => {
                             )}
                             {less && (
                                 <div style={{position:"relative"}}>
-                                    <label style={{fontSize:"10px",color:"red",position:"absolute"}}>Вы ввели число ниже 0</label>
+                                    <label style={{fontSize:"10px",color:"red",position:"absolute"}}>Вы ввели недопустимое число</label>
                                 </div>
                             )}
                             {no_numb && (
