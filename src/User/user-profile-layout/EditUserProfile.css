@@ -20,16 +20,16 @@
 }
 .link
 {
-    font-size: 12px;
+    font-size: 17px;
     display: flex;
     flex-direction: column;
     justify-self: left;
     text-decoration: none;
-    color:rgb(153, 150, 143);
+    color: blue;
 }
 .link:hover
 {
-    color: rgb(93, 158, 254);
+    color:rgb(153, 150, 143);
 }
 .window{
     width: 95%;

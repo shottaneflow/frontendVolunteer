@@ -79,7 +79,7 @@ const EditEventPage = () => {
         return <p>Загрузка...</p>;
     }
     return (
-        <div style={{ maxWidth: "400px", margin: "130px auto", textAlign: "left", display:"flex",flexDirection:"column" }}>
+        <div className="event-add-change-form">
             <div style={{display:"flex", flexDirection:"column", fontSize:"10px",marginLeft:"10px"}}>
                 <Link to="/requests" className="event-link" style={{marginLeft:"10px"}}>
                     просмотр заявок
@@ -165,7 +165,7 @@ const EditEventPage = () => {
                             )}
                             {less && (
                                 <div style={{position:"relative"}}>
-                                    <label style={{fontSize:"10px",color:"red",position:"absolute"}}>Вы ввели число ниже 0</label>
+                                    <label style={{fontSize:"10px",color:"red",position:"absolute"}}>Вы ввели недопустимое число</label>
                                 </div>
                             )}
                             {no_numb && (
@@ -177,10 +177,10 @@ const EditEventPage = () => {
                             </div>
                         </div>
                     <div style={{display:"flex",flexDirection:"column"}}>
-                        <button type="submit" className="delete-event-button" disabled={!(more==false && no_numb == false && less ==false)? "disabled":""}>Редактировать событие</button>
+                        <button type="submit" className="change-event-button" disabled={!(more==false && no_numb == false && less ==false)? "disabled":""}>Редактировать событие</button>
                     </div>
                 </form>
-                <button className="delete-to-activity" onClick={() => navigate(`/events/${id}/activities`)}>Список мероприятий</button>
+                <button className="act-list-activity" onClick={() => navigate(`/events/${id}/activities`)}>Список мероприятий</button>
             </div>
     );
 };

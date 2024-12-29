@@ -13,6 +13,13 @@
     transform: translateY(-5px);
     visibility: hidden;
 }
+.event-add-change-form{
+    max-width: 450px;
+    margin: 130px auto;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+}
 .drop-down.active{
     transform: translateY(0);
     opacity: 1;
@@ -39,7 +46,7 @@
 .add-event-button{
     margin: 0px 0px 0px 10px;
     padding: 0px;
-    font-size: 16px;
+    font-size: 18px;
     border:none;
     background-color: white;
 }
@@ -57,41 +64,32 @@
 .over{
     border-color: red;
 }
-.event-add-link{
-    font-size: 10px;
-    text-decoration: none;
-    color: blue;
-}
-.event-add-link:hover{
-    color:rgb(153, 150, 143);
-}
-
-.delete-event-button{
+.change-event-button{
     padding: 0px;
-    font-size: 16px;
+    font-size: 18px;
     margin-top: 10px;
     border:none;
     background-color: white;
     align-self: self-start;
     margin-left: 10px;
 }
-.delete-event-button:hover{
+.change-event-button:hover{
     color:rgb(153, 150, 143);
 }
-.delete-to-activity{
+.act-list-activity{
     align-self: self-start;
     background-color: white;
     border: none;
     padding: 0px;
-    font-size: 16px;
+    font-size: 18px;
     margin-left: 20px;
     
 }
-.delete-to-activity:hover{
+.act-list-activity:hover{
     color:rgb(153, 150, 143);
 }
 .event-link{
-    font-size: 10px;
+    font-size: 18px;
     text-decoration: none;
     color: blue;
 }

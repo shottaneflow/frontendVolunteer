@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import apiClient from "../../apiClient";
 import {useParams, useNavigate, Link} from "react-router-dom";
 import {handleError} from "../../errorHandler";
@@ -22,6 +22,7 @@ const AddActivityPage = () => {
     const [newLocation, setNewLocation] = useState("");
     const [activities,setActivities] = useState(null);
     const [bol,setBol] = useState(false);
+    const [is_location,setIsLocation] = useState(false);
 
 
     const countRequiredVol=()=>{
@@ -87,11 +88,16 @@ const AddActivityPage = () => {
 
     const handleAddLocation = () => {
         if (newLocation.trim()) {
-            setFormData((prev) => ({
-                ...prev,
-                locations: [...prev.locations, { id: null, name: newLocation.trim() }]
-            }));
-            setNewLocation("");
+            if(!formData.locations.some((location)=>{
+                return location.name === newLocation
+            })){
+                setFormData((prev) => ({
+                    ...prev,
+                    locations: [...prev.locations, { id: null, name: newLocation.trim() }]
+                }));
+                setNewLocation("");
+            }
+            else setIsLocation(true);
         }
     };
 
@@ -102,20 +108,23 @@ const AddActivityPage = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        try {
-            await apiClient.post(
-                `http://localhost:8081/admin/events-api/${eventId}/create-activity`,
-                formData
-            );
-            alert("Мероприятие успешно создано!");
-            navigate(`/events/${eventId}/activities`);
-        } catch (error) {
-            handleError(error, navigate);
+        if(formData.locations.length > 0){
+            try {
+                await apiClient.post(
+                    `http://localhost:8081/admin/events-api/${eventId}/create-activity`,
+                    formData
+                );
+                alert("Мероприятие успешно создано!");
+                navigate(`/events/${eventId}/activities`);
+            } catch (error) {
+                handleError(error, navigate);
+            }
         }
+        else alert("Введите локации для мероприятия");
     };
 
     return (
-        <div style={{ maxWidth: "500px", margin: "130px auto" }}>
+        <div className="act-add-change-form">
             <div style={{display:"flex", flexDirection:"column"}}>
                 <Link to="/events" className="act-link">
                     на главную
@@ -189,7 +198,7 @@ const AddActivityPage = () => {
                             ))}
                         </ul>
                     )}
-                    <div style={{display:"flex",flexDirection:"row"}}>
+                    <div style={{display:"flex",flexDirection:"row",position:"relative"}}>
                         <input
                             className="act-req-vol"
                             style={{width:"49%"}}
@@ -197,11 +206,18 @@ const AddActivityPage = () => {
                             maxLength="150"
                             minLength="0"
                             value={newLocation}
-                            onChange={(e) => setNewLocation(e.target.value)}
+                            onChange={(e) => {
+                                setIsLocation(false);
+                                setNewLocation(e.target.value)}}
                         />
                         <button type="button" className="act-add-location" onClick={handleAddLocation}>
                             добавить локацию
                         </button>
+                        {is_location && (
+                            <div className="act-location">
+                                <label>Локация уже существует</label>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <button type="submit" className="act-submit">

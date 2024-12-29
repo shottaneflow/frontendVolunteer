@@ -17,6 +17,7 @@ const EditActivityPage = () => {
     const [required,setRequired] = useState(0);
     const navigate = useNavigate();
     const [bol,setBol] = useState(false);
+    const [is_location,setIsLocation] = useState(false);
 
     const countRequiredVol=()=>{
         let req = required;
@@ -94,9 +95,14 @@ const EditActivityPage = () => {
 
     const handleAddLocation = () => {
         if (newLocation.trim()) {
+            if(!locations.some((location)=>{
+                return location.name === newLocation
+            })){
             const tempId = Date.now(); // Временный уникальный ID
             setLocations((prev) => [...prev, { id: null, tempId, name: newLocation.trim() }]);
             setNewLocation("");
+            }
+            else setIsLocation(true);
         }
     };
 
@@ -114,20 +120,23 @@ const EditActivityPage = () => {
 
     const handleSave = async (e) => {
         e.preventDefault();
-        try {
-            const updatedLocations = locations.map(({ tempId, ...rest }) => rest); // Удаляем tempId
-            const updatedActivity = { ...activity, languages: selectedLanguages, locations: updatedLocations };
-            await apiClient.post(`http://localhost:8081/admin/events-api/${eventId}/edit-activity/${activityId}`, updatedActivity);
-            navigate(`/events/${eventId}/activities`);
-        } catch (error) {
-            handleError(error, navigate);
+        if(locations.length > 0){
+            try {
+                const updatedLocations = locations.map(({ tempId, ...rest }) => rest); // Удаляем tempId
+                const updatedActivity = { ...activity, languages: selectedLanguages, locations: updatedLocations };
+                await apiClient.post(`http://localhost:8081/admin/events-api/${eventId}/edit-activity/${activityId}`, updatedActivity);
+                navigate(`/events/${eventId}/activities`);
+            } catch (error) {
+                handleError(error, navigate);
+            }
         }
+        else alert("Введите локации для мероприятия");
     };
 
     if (!activity) return <div>Загрузка...</div>;
 
     return (
-        <div style={{ maxWidth: "500px", margin: "130px auto" }}>
+        <div className="act-add-change-form">
             <div style={{display:"flex", flexDirection:"column"}}>
                 <Link to="/events" className="act-link">
                     на главную
@@ -212,7 +221,7 @@ const EditActivityPage = () => {
                             ))}
                         </>
                     )}
-                    <div style={{display:"flex",flexDirection:"row"}}>
+                    <div style={{display:"flex",flexDirection:"row",position:"relative"}}>
                         <input 
                             className="act-req-vol"
                             style={{width:"49%"}}
@@ -220,9 +229,16 @@ const EditActivityPage = () => {
                             maxLength="150"
                             minLength="0"
                             value={newLocation}
-                            onChange={(e) => setNewLocation(e.target.value)}
+                            onChange={(e) => {
+                                setIsLocation(false);
+                                setNewLocation(e.target.value)}}
                         />
                         <button type="button" className="act-add-location" onClick={handleAddLocation}>добавить локацию</button>
+                        {is_location && (
+                            <div className="act-location">
+                                <label>Локация уже существует</label>
+                            </div>
+                        )}
                     </div>
                 </div>
                 <button type="submit" className="act-submit">
