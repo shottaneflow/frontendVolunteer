@@ -69,3 +69,14 @@
 .check-box{
     border-radius: 20px;
 }
+.act-delete-location-label{
+    padding-left: 15px;
+    display: block;
+    color:rgb(0, 0, 0);
+    font-size: 20px;
+    width: 40px;
+}
+.act-delete-location-label:hover{
+    color:rgb(153, 150, 143);
+    padding-left: 14px;
+}

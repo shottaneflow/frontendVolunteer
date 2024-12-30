@@ -20,7 +20,7 @@ const AdminRequestsPage = () => {
 
         fetchRequests();
     }, []);
-
+    console.log(requests);
     const handleApprove = async (requestId) => {
         try {
             await apiClient.post(`http://localhost:8081/admin/request-api/accept/${requestId}`);
@@ -53,7 +53,7 @@ const AdminRequestsPage = () => {
                     <table style={{ width: "100%", borderCollapse: "collapse"}}>
                         <thead>
                         <tr style={{textAlign:"left"}}>
-                            <th>Заявки</th>
+                            <th>ФИО</th>
                             <th>Мероприятие</th>
                             <th>Статус</th>
                         </tr>
@@ -61,7 +61,7 @@ const AdminRequestsPage = () => {
                         <tbody>
                         {filteredRequests.map((request) => (
                             <tr className="row" key={request.id}>
-                                <td className="margin-top">Заявка №{request.id}</td>
+                                <td className="margin-top"><a style={{cursor:"pointer"}} onClick={()=>{navigate(`/profile/${request.user.id}`);}}>{request.user.fio == null ? `id:${request.user.id}` : request.user.fio }</a></td>
                                 <td className="margin-top">
                                     {request.activity.name}
                                 </td>
