@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import apiClient from "../../apiClient";
-import {Link, useNavigate} from "react-router-dom";
+import {Link, useNavigate, useParams} from "react-router-dom";
 import {handleError} from "../../errorHandler";
 import './EditUserProfile.css';
 
 const EditUserProfilePage = () => {
     const navigate = useNavigate();
-
+    const {id} = useParams();
     const [formData, setFormData] = useState({
         fio: "",
         dateOfBirth: "",
@@ -34,8 +34,25 @@ const EditUserProfilePage = () => {
                 handleError(error, navigate);
             }
         };
-
-        fetchUserData();
+        const fetchUser = async ()=>{
+            try{
+                const userResponse = await apiClient.get(`http://localhost:8081/request-api/get-user-from-request/${id}`);
+                setFormData({
+                    fio: userResponse.data.fio || "",
+                    dateOfBirth: userResponse.data.dateOfBirth || "",
+                    gender: userResponse.data.gender || "",
+                    about: userResponse.data.about || "",
+                    languages: userResponse.data.languages || []
+                });
+            }
+            catch(error){
+                handleError(error,navigate);
+            }
+        }
+        if(id!=null){
+            fetchUser();
+        }
+        else fetchUserData();
     }, []);
 
     const handleChange = (e) => {
@@ -78,9 +95,11 @@ const EditUserProfilePage = () => {
         <div className="profile">
         <div className="window">
             <div>
-                <Link className="link" to="/myRequests">
-                    мои заявки
-                </Link>
+                {id==null &&(
+                    <Link className="link" to="/myRequests">
+                        мои заявки
+                    </Link>
+                )}
                 <Link className="link" to="/events">
                     на главную
                 </Link>
@@ -95,6 +114,7 @@ const EditUserProfilePage = () => {
                     onChange={handleChange}
                     maxLength="50"
                     minLength="0"
+                    disabled = {id!=null? "disabled" : ""}
                     required
                 />
                 <a className="prof_text">Дата рождения:</a>
@@ -107,6 +127,7 @@ const EditUserProfilePage = () => {
                         value={formData.dateOfBirth}
                         onChange={handleChange}
                         required
+                        disabled = {id!=null? "disabled" : ""}
                         max={getMaxDate()}
                     />
                 </div>
@@ -114,11 +135,11 @@ const EditUserProfilePage = () => {
                     <label className="prof_text">Пол:</label>
                     <div style={{display: "flex",gap:"5px", paddingTop:"5px"}}>
                         <label>
-                            <input onChange={handleChange} type="radio" name="gender" value="Мужчина" checked={formData.gender === "Мужчина"}/>
+                            <input onChange={handleChange} type="radio" name="gender" value="Мужчина" checked={formData.gender === "Мужчина"} disabled = {id!=null? "disabled" : ""}/>
                             Мужской
                         </label>
                         <label>
-                            <input onChange={handleChange} type="radio" name="gender" value="Женщина"checked={formData.gender === "Женщина"}/>
+                            <input onChange={handleChange} type="radio" name="gender" value="Женщина"checked={formData.gender === "Женщина"} disabled = {id!=null? "disabled" : ""}/>
                             Женский
                         </label>
                     </div>
@@ -132,6 +153,7 @@ const EditUserProfilePage = () => {
                                 type="checkbox"
                                 checked={formData.languages.some((lang) => lang.id === language.id)}
                                 onChange={() => handleLanguageToggle(language)}
+                                disabled = {id!=null? "disabled" : ""}
                             />
                             {language.name}
                             </label>
@@ -146,11 +168,14 @@ const EditUserProfilePage = () => {
                         value={formData.about}
                         onChange={handleChange}
                         maxLength={500}
+                        disabled = {id!=null? "disabled" : ""}
                     />
                 </div>
-                <button type="submit" className="submit">
-                    Принять изменения
-                </button>
+                {id==null &&(
+                    <button type="submit" className="submit">
+                        Принять изменения
+                    </button>
+                )}
             </form>
         </div>
     </div>

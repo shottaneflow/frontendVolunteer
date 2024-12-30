@@ -129,7 +129,7 @@ const AddActivityPage = () => {
                 <Link to="/events" className="act-link">
                     на главную
                 </Link>
-                <Link to="/events" className="act-link">
+                <Link to="/requests" className="act-link">
                     просмотр заявок
                 </Link>
             </div>

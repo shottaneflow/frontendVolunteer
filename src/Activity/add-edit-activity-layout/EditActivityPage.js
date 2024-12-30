@@ -149,7 +149,7 @@ const EditActivityPage = () => {
                 <Link to="/events" className="act-link">
                     на главную
                 </Link>
-                <Link to="/events" className="act-link">
+                <Link to="/requests" className="act-link">
                     просмотр заявок
                 </Link>
             </div>
@@ -214,7 +214,7 @@ const EditActivityPage = () => {
                     {locations.length > 0 && (
                         <>
                             {locations.map((location) => (
-                                <div key={location.id || location.tempId}>
+                                <div key={location.id || location.tempId} style={{display:"flex",flexDirection:"row"}}>
                                     <input
                                         type="text"
                                         maxLength="150"
@@ -224,7 +224,7 @@ const EditActivityPage = () => {
                                         value={location.name}
                                         disabled
                                     />
-                                    <button style={{width:"48%",border:"none",textAlign:"left", backgroundColor:"white",fontSize:"20px",marginLeft:"15px", padding:"0px"}} onClick={() => handleDeleteLocation(location.id || location.tempId)}>—</button>
+                                    <div className="act-delete-location"><label className="act-delete-location-label" onClick={() => handleDeleteLocation(location.id || location.tempId)}>—</label></div>
                                 </div>
                             ))}
                         </>

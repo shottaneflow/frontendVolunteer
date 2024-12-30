@@ -1,4 +1,4 @@
-import React, { cloneElement, useEffect, useState,useRef, use } from "react";
+import React, { useEffect, useState } from "react";
 import apiClient from "../../apiClient";
 import { useNavigate } from "react-router-dom";
 import { handleError } from "../../errorHandler";
@@ -28,7 +28,6 @@ const EventsPage = () => {
     // Проверяем, есть ли среди ролей "ROLE_ADMIN"
     const isAdmin = roles.some(role => role.authority === "ROLE_ADMIN");
     const isUser = roles.some(role => role.authority === "ROLE_USER");
-
     const navigate = useNavigate();
 
     useEffect(() => {
