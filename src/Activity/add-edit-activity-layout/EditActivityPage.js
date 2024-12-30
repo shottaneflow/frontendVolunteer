@@ -136,7 +136,7 @@ const EditActivityPage = () => {
                     handleError(error, navigate);
                 }
             }
-            else alert(`Локация с именем "${activity.name}" уже существует`);
+            else alert(`Мероприятие с именем "${activity.name}" уже существует`);
         }
         else alert("Введите локации для мероприятия");
     };
